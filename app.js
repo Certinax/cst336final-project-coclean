@@ -1,9 +1,7 @@
 const express = require("express");
 const hbs = require("hbs");
 const path = require("path");
-// var cookieParser = require("cookie-parser");
-// var logger = require("morgan");
-var createError = require("http-errors");
+const createError = require("http-errors");
 
 // Register partials for hbs
 hbs.registerPartials(__dirname + "/views/partials");
