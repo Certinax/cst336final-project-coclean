@@ -1,0 +1,26 @@
+{
+  "name": "CoClean",
+  "version": "1.0.0",
+  "description": "Final Project in Internet-Programming CST336 @ CSUMB fall 2019",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Certinax/cst336final-project.git"
+  },
+  "author": "Frankiie, Isak Hauge, ThoMot, Certinax",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Certinax/cst336final-project/issues"
+  },
+  "homepage": "https://github.com/Certinax/cst336final-project#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "hbs": "^4.0.6",
+    "nodemon": "^1.19.4"
+  }
+}
