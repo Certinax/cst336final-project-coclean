@@ -37,9 +37,6 @@ class MySQL {
 			// Create connection object.
 			this._connection = mysql.createConnection(this.envCredentials);
 
-			// Do an initial connect to the server.
-			this.connect();
-
 			// Assign this instance to the class instance variable.
 			MySQL.instance = this;
 
