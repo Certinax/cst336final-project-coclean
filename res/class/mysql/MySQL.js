@@ -18,15 +18,22 @@ class MySQL {
 	 * Constructor
 	 */
 	constructor() {
+
 		// ? If MySQL instance is not equate false.
 		if (!!MySQL.instance) {
+
+			// ? If the existing instance is connected.
 			if (MySQL.instance.isConnected())
-				console.log('MySQL: Connected as ID ' + MySQL.instance.connectionId);
+				console.log('MySQL: Connected as ID ' + MySQL.instance.connection.threadId);
 			else {
 				MySQL.instance.connect();
 			}
+
+			// Return existing instance.
 			return MySQL.instance;
+
 		} else {
+
 			// Create connection object.
 			this._connection = mysql.createConnection(this.envCredentials);
 
@@ -35,13 +42,10 @@ class MySQL {
 
 			// Assign this instance to the class instance variable.
 			MySQL.instance = this;
+
+			// Return the new instance.
 			return MySQL.instance;
 		}
-	}
-
-
-	get connectionId() {
-		return this._connectionId;
 	}
 
 
@@ -63,8 +67,7 @@ class MySQL {
 				if (err) {
 					console.error(err.stack);
 				} else {
-					this._connectionId = this.connection.threadId;
-					console.log('MySQL: New connection as ID ' + this.connectionId)
+					console.log('MySQL: New connection as ID ' + this.connection.threadId)
 				}
 			});
 		} else {
@@ -108,10 +111,11 @@ class MySQL {
 
 		// Invoke SQL query.
 		this.connection.query(sql, (err, result) => {
+
 			// ? If there are any errors related to the query.
 			if (err) {
 				console.error(err.stack);
-				return;
+				return; // Terminate.
 			}
 			callback(result);
 		});
