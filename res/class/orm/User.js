@@ -8,16 +8,12 @@ class User {
 
 	/**
 	 * Constructor
-	 * @param {number} id
 	 * @param {string} name
 	 * @param {string} surname
 	 * @param {string} email
 	 * @param {string} password
 	 */
-	constructor(id, name, surname, email, password) {
-
-		/**@type{number}*/
-		this._id = id;
+	constructor(name, surname, email, password) {
 
 		/**@type{string}*/
 		this._name = name;
@@ -30,26 +26,6 @@ class User {
 
 		/**@type{string}*/
 		this._password = password;
-	}
-
-
-	/**
-	 * Getter: ID
-	 * @returns {number}
-	 */
-	getId() {
-		return this._id;
-	}
-
-
-	/**
-	 * Setter: ID
-	 * @param {number} id
-	 * @returns {User}
-	 */
-	setId(id) {
-		this._id = id;
-		return this;
 	}
 
 
@@ -157,7 +133,6 @@ class User {
 				const user = result[0];
 				callback(
 					new User(
-						user.ID,
 						user.name,
 						user.surname,
 						user.email,
