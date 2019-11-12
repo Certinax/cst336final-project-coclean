@@ -95,11 +95,11 @@ class MySQL {
 	 * Query
 	 * @param {string} sql
 	 * @param {function} callback
-	 * @example {
-	 *   query('select * from User', function(result) {
-	 *     console.log(result);
-	 *   });
-	 * }
+	 * @example
+	 * query('SELECT * FROM User', function(result) {
+	 * 	console.log(result);
+	 * });
+	 *
 	 */
 	query(sql, callback) {
 		// ? If the MySQL object is not connected.
