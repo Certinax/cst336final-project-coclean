@@ -107,14 +107,14 @@ class MySQL {
 			this.connect();
 
 		// Invoke SQL query.
-		this.connection.query(sql, (err, results, fields) => {
+		this.connection.query(sql, (err, result) => {
 
 			// ? If there are any errors related to the query.
 			if (err) {
 				console.error(err.stack);
 				return; // Terminate.
 			}
-			callback({results, fields});
+			callback(result);
 		});
 	}
 
