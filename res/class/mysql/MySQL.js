@@ -19,8 +19,8 @@ class MySQL {
 	 */
 	constructor() {
 
-		// ? If MySQL instance is not equate false.
-		if (!!MySQL.instance) {
+		// ? If MySQL instance is an MySQL instance.
+		if (MySQL.instance instanceof MySQL) {
 
 			// ? If the existing instance is connected.
 			if (MySQL.instance.isConnected())
@@ -107,14 +107,14 @@ class MySQL {
 			this.connect();
 
 		// Invoke SQL query.
-		this.connection.query(sql, (err, result) => {
+		this.connection.query(sql, (err, results, fields) => {
 
 			// ? If there are any errors related to the query.
 			if (err) {
 				console.error(err.stack);
 				return; // Terminate.
 			}
-			callback(result);
+			callback({results, fields});
 		});
 	}
 
