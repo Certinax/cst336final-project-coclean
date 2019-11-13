@@ -1,4 +1,4 @@
-const mysql = require('mysql');
+const mysql = require('mysql2');
 require('dotenv').config();
 
 /**
@@ -19,12 +19,14 @@ class MySQL {
 	 */
 	constructor() {
 
-		// ? If MySQL instance is not equate false.
-		if (!!MySQL.instance) {
+		// ? If MySQL instance is an MySQL instance.
+		if (MySQL.instance instanceof MySQL) {
+			// Debug.
+			this.cout('Using existing instance.');
 
 			// ? If the existing instance is connected.
 			if (MySQL.instance.isConnected())
-				console.log('MySQL: Connected as ID ' + MySQL.instance.connection.threadId);
+				this.cout('Connected as ID ' + MySQL.instance.connection.threadId);
 			else {
 				MySQL.instance.connect();
 			}
@@ -33,6 +35,9 @@ class MySQL {
 			return MySQL.instance;
 
 		} else {
+
+			// Debug.
+			this.cout('New instance created.');
 
 			// Create connection object.
 			this._connection = mysql.createConnection(this.envCredentials);
@@ -59,16 +64,17 @@ class MySQL {
 	 * Connect.
 	 */
 	connect() {
+		// ? If the instance is not connected.
 		if (!this.isConnected()) {
 			this.connection.connect((err) => {
 				if (err) {
 					console.error(err.stack);
 				} else {
-					console.log('MySQL: New connection as ID ' + this.connection.threadId)
+					this.cout('New connection as ID ' + this.connection.threadId)
 				}
 			});
 		} else {
-			console.log('MySQL: Connection as ID ' + this.connection.threadId)
+			this.cout('Connection as ID ' + this.connection.threadId)
 		}
 	}
 
@@ -130,6 +136,22 @@ class MySQL {
 			password: process.env.DB_PASS,
 			database: process.env.DB_NAME
 		}
+	}
+
+
+	/**
+	 * Console Out
+	 * A custom console logger for this class.
+	 * @param message
+	 */
+	cout(message) {
+		const reset = '\x1b[0m';
+		const primary = '\x1b[35m';
+		const secondary = '\x1b[36m';
+		console.log(
+			primary + 'MySQL: ' + secondary + '%s' + reset,
+			message,
+		);
 	}
 }
 
