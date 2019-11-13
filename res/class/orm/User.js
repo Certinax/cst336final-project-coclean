@@ -143,6 +143,7 @@ class User {
 				console.error(
 					`MySQL: User with ID ${id} does not exist.`
 				);
+				callback([]);
 			}
 		});
 	}
