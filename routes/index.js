@@ -1,7 +1,8 @@
 const MySQL = require('../res/class/mysql/MySQL');
 const User = require('../res/class/orm/User');
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
+const apiRouter = require('./api/apiRouter');
 
 /* GET home page. */
 router.get("/", function(req, res, next) {
@@ -21,24 +22,22 @@ router.get('/db_test', (req, res, nex) => {
 // ORM Test Route
 router.get('/orm', (req, res, next) => {
   const user = new User(
-  	1,
 		'ORM',
 		'Hauge',
 		'orm@db.com',
 		'abc123'
 	);
 
-  User.fetchAll((users) => {
-  	res.json(users);
-	});
-
   // TODO: Enable later.
-  // User.create(user, (out) => {
-	// 	console.log(out);
-	// 	User.fetchAll((users) => {
-	// 		res.json(users);
-	// 	});
-	// });
+  User.create(user, (out) => {
+		console.log(out);
+		User.fetchAll((users) => {
+			res.json(users);
+		});
+	});
 });
+
+// * API Router.
+router.use('/api', apiRouter);
 
 module.exports = router;
