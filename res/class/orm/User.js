@@ -111,37 +111,29 @@ class User {
 
 	/**
 	 * Fetch
-	 * @param id
+	 * @param email
 	 * @param {function} callback
 	 * @example
 	 * fetch(1, (user) => {
 	 *   console.log(user.getName())
 	 * });
 	 */
-	static fetch(id, callback) {
+	static fetch(email, callback) {
 
 		// Instantiate MySQL object.
 		const db = new MySQL();
 
 		// Define SQL query.
-		const sql = `SELECT * FROM User WHERE ID = ${id};`;
+		const sql = 'SELECT * FROM User WHERE email = ?;';
 
 		// Execute query.
-		db.query(sql, (result) => {
+		db.prep(sql, [email], (result) => {
 			// ? If the query returned any results.
 			if (result.length > 0) {
-				const user = result[0];
-				callback(
-					new User(
-						user.name,
-						user.surname,
-						user.email,
-						user.password
-					)
-				);
+				callback(result);
 			} else {
 				console.error(
-					`MySQL: User with ID ${id} does not exist.`
+					`MySQL: User with email (${email}) does not exist.`
 				);
 				callback([]);
 			}
@@ -164,23 +156,52 @@ class User {
 
 	/**
 	 * Create
-	 * @param {User} user
+	 * @param {object} args
+	 * @param {string} args.name
+	 * @param {string} args.surname
+	 * @param {string} args.email
+	 * @param {string} args.password
 	 * @param {function} callback
 	 */
-	static create(user, callback) {
+	static create({name, surname, email, password}, callback) {
 		const db = new MySQL();
-		let sql = 'USE ' + db.envCredentials.database + ';\n';
-		sql += 'CALL new_user(';
-		sql += `"${user.getName()}", `;
-		sql += `"${user.getSurname()}", `;
-		sql += `"${user.getEmail()}", `;
-		sql += `"${user.getPassword()}", `;
-		sql += '@out);\n';
-		sql += 'SELECT @out;';
-		console.log(sql);
-		db.query(sql, (result) => {
-			console.log(result);
-			callback(result);
+		const sql = `CALL new_user("${name}","${surname}","${email}","${password}",@out); SELECT @out;`;
+		db.query(sql, (res) => {
+			callback(res);
+		});
+	}
+
+
+	/**
+	 * Edit
+	 * @param {object} args
+	 * @param {string} args.name
+	 * @param {string} args.surname
+	 * @param {string} args.email
+	 * @param {string} args.password
+	 * @param {function} callback
+	 */
+	static edit({name, surname, email, password}, callback) {
+		const db = new MySQL();
+		const sql = `CALL edit_user("${name}","${surname}","${email}","${password}",@out); SELECT @out;`;
+		db.query(sql, (res) => {
+			callback(res);
+		});
+	}
+
+
+	/**
+	 * Delete
+	 * @param {object} credentials
+	 * @param {string} credentials.email
+	 * @param {string} credentials.password
+	 * @param {function} callback
+	 */
+	static delete({email, password}, callback) {
+		const db = new MySQL();
+		const sql = `CALL delete_user("${email}","${password}",@out); SELECT @out;`;
+		db.query(sql, (res) => {
+			callback(res);
 		});
 	}
 }
