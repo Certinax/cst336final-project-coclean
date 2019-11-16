@@ -40,7 +40,7 @@ class MySQL {
 			this.cout('New instance created.');
 
 			// Create connection object.
-			this._connection = mysql.createConnection(this.envCredentials);
+			this._connection = mysql.createConnection(this.config);
 
 			// Assign this instance to the class instance variable.
 			MySQL.instance = this;
@@ -125,16 +125,35 @@ class MySQL {
 	}
 
 
+	prep(sql, data, callback) {
+		// ? If the MySQL object is not connected.
+		if (!this.isConnected())
+			this.connect();
+
+		// Invoke SQL query.
+		this.connection.execute(sql, data, (err, result) => {
+
+			// ? If there are any errors related to the query.
+			if (err) {
+				console.error(err.stack);
+				return; // Terminate.
+			}
+			callback(result);
+		});
+	}
+
+
 	/**
-	 * Getter: ENV Credentials.
+	 * Getter: Config object.
 	 * @returns {Object}
 	 */
-	get envCredentials() {
+	get config() {
 		return {
 			host: process.env.DB_HOST,
 			user: process.env.DB_USER,
 			password: process.env.DB_PASS,
-			database: process.env.DB_NAME
+			database: process.env.DB_NAME,
+			multipleStatements: true,
 		}
 	}
 
