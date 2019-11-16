@@ -1,17 +1,19 @@
 const MySQL = require('../res/class/mysql/MySQL');
-const User = require('../res/class/orm/User');
 const express = require("express");
 const router = express.Router();
 const apiRouter = require('./api/apiRouter');
+const testRouter = require('./test/test');
 
-/* GET home page. */
+// Landing page.
 router.get("/", function(req, res, next) {
   res.render("index", {
     title: "Final Project",
+		message: 'We are overqualified.',
   });
 });
 
-// DB Test route.
+// ! DB TEST (FOR DEBUGGING ONLY)
+// TODO: Delete when obsolete.
 router.get('/db_test', (req, res, nex) => {
   const db = new MySQL();
   db.query('SHOW PROCESSLIST', (result) => {
@@ -19,25 +21,11 @@ router.get('/db_test', (req, res, nex) => {
   });
 });
 
-// ORM Test Route
-router.get('/orm', (req, res, next) => {
-  const user = new User(
-		'ORM',
-		'Hauge',
-		'orm@db.com',
-		'abc123'
-	);
-
-  // TODO: Enable later.
-  User.create(user, (out) => {
-		console.log(out);
-		User.fetchAll((users) => {
-			res.json(users);
-		});
-	});
-});
-
 // * API Router.
 router.use('/api', apiRouter);
+
+// ! TEST ROUTER FOR API
+// TODO: Delete when obsolete.
+router.use('/test', testRouter);
 
 module.exports = router;

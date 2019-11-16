@@ -1,0 +1,49 @@
+<section class="py-5">
+	<div class="container">
+		<h1>Update user</h1>
+		<h2>HTTP PUT /api/user/{email}/{password}</h2>
+		<form>
+			<div class="form-group"><input type="text" class="form-control"name="email" placeholder="Existing email"></div>
+			<div class="form-group"><input type="text" class="form-control"name="oldPassword" placeholder="Existing password"></div>
+			<hr>
+			<div class="form-group"><input type="text" class="form-control" name="name" placeholder="New name"></div>
+			<div class="form-group"><input type="text" class="form-control" name="surname" placeholder="New surname"></div>
+			<div class="form-group"><input type="text" class="form-control" name="password" placeholder="New Password"></div>
+		</form>
+		<button class="btn btn-primary" type="button">Update user</button>
+	</div>
+	<div class="container mt-5">
+		<p>How to use</p>
+		<div class="card p-3">
+			<pre>Http.request.put('/api/user/isakhauge@gmail.com/abc123', requestBody, function (result) {
+	console.log(result);
+});</pre>
+		</div>
+	</div>
+</section>
+<hr>
+<section class="py-5">
+	<div class="container">
+		<div id="code" class="card p-3 small text-monospace bg-light">
+		</div>
+	</div>
+</section>
+<script type="module">
+	import {Http} from '/js/class/http/Http.js';
+	function onFetch() {
+		const form = document.querySelector('form');
+		const body = {
+			name: form.name.value,
+			surname: form.surname.value,
+			email: form.email.value,
+			password: form.password.value,
+			oldPassword: form.oldPassword.value
+		};
+		Http.request.put(`/api/user/${body.email}/${body.oldPassword}`, body, function (result) {
+			document.getElementById('code').innerText = result;
+		});
+	}
+	window.onload = function () {
+		document.querySelector('button').onclick = onFetch;
+	}
+</script>
