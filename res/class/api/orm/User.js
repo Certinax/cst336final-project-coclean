@@ -1,4 +1,13 @@
-const MySQL = require('../mysql/MySQL');
+require('dotenv').config();
+const mysql = require('../../mysql/MySQL');
+const mysqlCredentials = require('../../mysql/MysqlCredentials');
+
+const db = mysql.getInstance(new mysqlCredentials(
+	process.env.DB_HOST,
+	process.env.DB_USER,
+	process.env.DB_PASS,
+	process.env.DB_NAME
+));
 
 /**
  * User
@@ -120,23 +129,26 @@ class User {
 	 */
 	static fetch(email, callback) {
 
-		// Instantiate MySQL object.
-		const db = new MySQL();
-
 		// Define SQL query.
 		const sql = 'SELECT * FROM User WHERE email = ?;';
 
 		// Execute query.
-		db.prep(sql, [email], (result) => {
-			// ? If the query returned any results.
-			if (result.length > 0) {
-				callback(result);
-			} else {
-				console.error(
-					`MySQL: User with email (${email}) does not exist.`
-				);
-				callback([]);
-			}
+		db.prep(sql, [email])
+		.then((resolved) => {
+			// ? If the resolved value is an array.
+			if (Array.isArray(resolved)) {
+				// ? If the query returned any results.
+				if (resolved.length > 0) {
+					callback(resolved);
+				} else {
+					console.error(
+						`MySQL: User with email (${email}) does not exist.`
+					);
+					callback([]);
+				}
+			} else callback([]);
+		}).catch(err => {
+			callback([]);
 		});
 	}
 
@@ -146,10 +158,13 @@ class User {
 	 * @param {function} callback
 	 */
 	static fetchAll(callback) {
-		const db = new MySQL();
 		const sql = 'SELECT * FROM User;';
-		db.query(sql, (result) => {
-			callback(result);
+		db.query(sql)
+		.then((resolved) => {
+			if (typeof resolved === 'object')
+				callback(resolved);
+		}).catch(err => {
+			callback([]);
 		});
 	}
 
@@ -164,10 +179,12 @@ class User {
 	 * @param {function} callback
 	 */
 	static create({name, surname, email, password}, callback) {
-		const db = new MySQL();
 		const sql = `CALL new_user("${name}","${surname}","${email}","${password}",@out); SELECT @out;`;
-		db.query(sql, (res) => {
+		db.query(sql)
+		.then(res => {
 			callback(res);
+		}).catch(err => {
+			callback([]);
 		});
 	}
 
@@ -182,10 +199,12 @@ class User {
 	 * @param {function} callback
 	 */
 	static edit({name, surname, email, password}, callback) {
-		const db = new MySQL();
 		const sql = `CALL edit_user("${name}","${surname}","${email}","${password}",@out); SELECT @out;`;
-		db.query(sql, (res) => {
+		db.query(sql)
+		.then(res => {
 			callback(res);
+		}).catch(err => {
+			callback([]);
 		});
 	}
 
@@ -198,10 +217,12 @@ class User {
 	 * @param {function} callback
 	 */
 	static delete({email, password}, callback) {
-		const db = new MySQL();
 		const sql = `CALL delete_user("${email}","${password}",@out); SELECT @out;`;
-		db.query(sql, (res) => {
+		db.query(sql)
+		.then(res => {
 			callback(res);
+		}).catch(err => {
+			callback([]);
 		});
 	}
 }
