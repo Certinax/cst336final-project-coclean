@@ -179,6 +179,7 @@ class User {
 	 * @param {function} callback
 	 */
 	static create({name, surname, email, password}, callback) {
+		password = mysql.SHA256(password);
 		const sql = `CALL new_user("${name}","${surname}","${email}","${password}",@out); SELECT @out;`;
 		db.query(sql)
 		.then(res => {
@@ -195,11 +196,11 @@ class User {
 	 * @param {string} args.name
 	 * @param {string} args.surname
 	 * @param {string} args.email
-	 * @param {string} args.password
+	 * @param {string} args.newPassword
 	 * @param {function} callback
 	 */
-	static edit({name, surname, email, password}, callback) {
-		const sql = `CALL edit_user("${name}","${surname}","${email}","${password}",@out); SELECT @out;`;
+	static edit({name, surname, email, newPassword}, callback) {
+		const sql = `CALL edit_user("${name}","${surname}","${email}","${newPassword}",@out); SELECT @out;`;
 		db.query(sql)
 		.then(res => {
 			callback(res);
