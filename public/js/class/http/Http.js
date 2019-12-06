@@ -1,80 +1,42 @@
 /**
  * Http
- * @author
- * @example
- * Http.request.get('http://api.web.com/user', function(result) {
- *   console.log(result);
- * });
+ * @author Isak Hauge
+ * @type {{request: Http.request}}
  */
-export class Http {
-	static request = {
-		/**
-		 * HTTP GET
-		 * @param {string} url
-		 * @param {function} callback
-		 */
-		get: function (url, callback) {
-			const xhr = new XMLHttpRequest();
-			xhr.onreadystatechange = function () {
-				if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200)
-					callback(xhr.responseText);
-			};
-			xhr.open('GET', url, true);
-			xhr.send();
-		},
+export const Http = {
 
+	/**
+	 * Method
+	 * @typedef {string} HttpMethod
+	 */
+	method: {
+		get: 'GET',
+		post: 'POST',
+		put: 'PUT',
+		delete: 'DELETE'
+	},
 
-		/**
-		 * HTTP POST
-		 * @param {string} url
-		 * @param {object} body
-		 * @param {function} callback
-		 */
-		post: function (url, body, callback) {
-			const xhr = new XMLHttpRequest();
-			xhr.onreadystatechange = function () {
-				if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200)
-					callback(xhr.responseText);
-			};
-			xhr.open('POST', url, true);
-			xhr.setRequestHeader('Content-Type', 'application/json');
-			xhr.send(JSON.stringify(body));
-		},
-
-
-		/**
-		 * HTTP PUT
-		 * @param {string} url
-		 * @param {object} body
-		 * @param {function} callback
-		 */
-		put: function (url, body, callback) {
-			const xhr = new XMLHttpRequest();
-			xhr.onreadystatechange = function () {
-				if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200)
-					callback(xhr.responseText);
-			};
-			xhr.open('PUT', url, true);
-			xhr.setRequestHeader('Content-Type', 'application/json');
-			xhr.send(JSON.stringify(body));
-		},
-
-
-		/**
-		 * HTTP DELETE
-		 * @param {string} url
-		 * @param {object} body
-		 * @param {function} callback
-		 */
-		delete: function (url, body, callback) {
-			const xhr = new XMLHttpRequest();
-			xhr.onreadystatechange = function () {
-				if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200)
-					callback(xhr.responseText);
-			};
-			xhr.open('DELETE', url, true);
-			xhr.setRequestHeader('Content-Type', 'application/json');
-			xhr.send(JSON.stringify(body));
-		}
-	};
-}
+	/**
+	 * Request
+	 * @param {HttpMethod} method
+	 * @param {string} url
+	 * @param {object|null} requestBody
+	 * @param {function} callback
+	 */
+	request: function (method, url, requestBody, callback) {
+		const xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200)
+				console.log("HTTP " + method.toUpperCase() + " response was received.");
+				callback(xhr.responseText);
+		};
+		console.log("HTTP " + method.toUpperCase() + " request was sent.");
+		xhr.open(method, url, true);
+		xhr.setRequestHeader('Content-Type', 'application/json');
+		// ? If HTTP request method is GET or there is no valid request body object.
+		if (method === Http.method.get || !requestBody)
+			xhr.send(); // Send request without body.
+		else
+			xhr.send(JSON.stringify(requestBody)); // Send request with body.
+	},
+};
