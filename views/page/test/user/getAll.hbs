@@ -7,7 +7,7 @@
 	<div class="container mt-5">
 		<p>How to use</p>
 		<div class="card p-3">
-			<pre>Http.request.get('/api/user', function (result) {
+			<pre>Http.request('get', '/api/user', null, function(result) {
 	console.log(result);
 });</pre>
 		</div>
@@ -23,7 +23,7 @@
 <script type="module">
 	import {Http} from '/js/class/http/Http.js';
 	function onFetch() {
-		Http.request.get('/api/user', function (result) {
+		Http.request('get', '/api/user', null, function(result) {
 			document.getElementById('code').innerText = result;
 		});
 	}

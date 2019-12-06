@@ -2,8 +2,11 @@ const express = require("express");
 const userApi = express.Router();
 const user = require('../../../res/class/api/orm/User');
 const statusObject = require('../../../res/class/api/StatusObject');
+const requestBody = require('../../../res/class/api/orm/RequestBody');
 const responseBody = require('../../../res/class/api/orm/ResponseBody');
 const crudOperation = require('../../../res/class/api/orm/CrudOperation');
+const mysql = require('../../../res/class/mysql/MySQL');
+
 
 // * Get all users.
 userApi.get('/', (req, res, next) => {
@@ -20,6 +23,7 @@ userApi.get('/', (req, res, next) => {
 		);
 	})
 });
+
 
 // * Get specific user.
 userApi.get('/:email', (req, res, next) => {
@@ -39,15 +43,11 @@ userApi.get('/:email', (req, res, next) => {
 	});
 });
 
+
 // * Create user.
 userApi.post('/', (req, res, next) => {
 	const {name,surname,email,password} = req.body;
-	const requestBody = {
-		name: name,
-		surname: surname,
-		email: email,
-		password: password
-	};
+	const requestBody = requestBody.post.create.user(name,surname,email,password);
 	user.create(requestBody, (result) => {
 		if (!result) res.json([]);
 		res.json(
@@ -63,27 +63,34 @@ userApi.post('/', (req, res, next) => {
 	});
 });
 
+
 // * Update user.
 // TODO: Fix error handling.
-userApi.put('/:email/:password', (req, res, next) => {
-	const {email, password} = req.params;
+userApi.put('/:email', (req, res, next) => {
+	const {email} = req.params;
+	console.log(req.params);
+	let {oldPassword, name, surname, newPassword} = req.body;
+	oldPassword = mysql.SHA256(oldPassword);
 	user.fetch(email, (user) => {
 		console.log(user[0]);
-		if (!user || user.length < 1) res.json([]);
-		const loginMatch = email === user[0].email && password === user[0].password;
+		//if (!user || user.length < 1) res.json([]);
+		const loginMatch = email === user[0].email && oldPassword === user[0].password;
 		if (loginMatch) {
-			user.edit(req.body, (result) => {
-				if (!result) res.json([]);
-				res.json(
-					new responseBody(
-						'user',
-						crudOperation.UPDATE,
-						result[1][0]["@out"] === 'User updated!',
-						`User (${email}) was successfully updated.`,
-						`User (${email}) was not updated. Wrong email or password.`,
-						result[1][0]["@out"]
-					)
-				);
+			user.edit({name,surname,email,newPassword}, (result) => {
+				if (!result) {
+					res.json([]);
+				} else {
+					res.json(
+						new responseBody(
+							'user',
+							crudOperation.UPDATE,
+							result[1][0]["@out"] === 'User updated!',
+							`User (${email}) was successfully updated.`,
+							`User (${email}) was not updated. Wrong email or password.`,
+							result[1][0]["@out"]
+						)
+					);
+				}
 			});
 		} else {
 			res.json(
@@ -101,7 +108,7 @@ userApi.put('/:email/:password', (req, res, next) => {
 });
 
 // * Delete user.
-// TODO: Fix error handling.
+// TODO: Fix error handling and API design.
 userApi.delete('/:email/:password', (req, res, next) => {
 	const {email, password} = req.params;
 	const credentials = {email: email, password: password};
