@@ -1,158 +1,137 @@
-const mysql = require('mysql2');
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var mysql2 = require('mysql2');
+var crypto = require('crypto');
 require('dotenv').config();
-
 /**
  * MySQL
+ * This implementation of MySQL (mysql2) uses pool connections
+ * for increased performance and reduced query latency.
  * @author Isak Hauge
+ * @version 2.0
  */
-class MySQL {
-
-	/**
-	 * Singleton instance variable.
-	 * @type {MySQL}
-	 */
-	static instance;
-
-
-	/**
-	 * Constructor
-	 */
-	constructor() {
-
-		// ? If MySQL instance is an MySQL instance.
-		if (MySQL.instance instanceof MySQL) {
-			// Debug.
-			this.cout('Using existing instance.');
-
-			// ? If the existing instance is connected.
-			if (MySQL.instance.isConnected())
-				this.cout('Connected as ID ' + MySQL.instance.connection.threadId);
-			else {
-				MySQL.instance.connect();
-			}
-
-			// Return existing instance.
-			return MySQL.instance;
-
-		} else {
-
-			// Debug.
-			this.cout('New instance created.');
-
-			// Create connection object.
-			this._connection = mysql.createConnection(this.envCredentials);
-
-			// Assign this instance to the class instance variable.
-			MySQL.instance = this;
-
-			// Return the new instance.
-			return MySQL.instance;
-		}
-	}
-
-
-	/**
-	 * Getter: Connection.
-	 * @returns {Connection}
-	 */
-	get connection() {
-		return this._connection;
-	}
-
-
-	/**
-	 * Connect.
-	 */
-	connect() {
-		// ? If the instance is not connected.
-		if (!this.isConnected()) {
-			this.connection.connect((err) => {
-				if (err) {
-					console.error(err.stack);
-				} else {
-					this.cout('New connection as ID ' + this.connection.threadId)
-				}
-			});
-		} else {
-			this.cout('Connection as ID ' + this.connection.threadId)
-		}
-	}
-
-
-	/**
-	 * Disconnect.
-	 */
-	disconnect() {
-		if (this.isConnected())
-			this.connection.end();
-	}
-
-
-	/**
-	 * Is Connected.
-	 * @returns {boolean}
-	 */
-	isConnected() {
-		return this.connection.state !== 'disconnected';
-	}
-
-
-	/**
-	 * Query
-	 * @param {string} sql
-	 * @param {function} callback
-	 * @example
-	 * query('SELECT * FROM User', function(result) {
-	 * 	console.log(result);
-	 * });
-	 *
-	 */
-	query(sql, callback) {
-		// ? If the MySQL object is not connected.
-		if (!this.isConnected())
-			this.connect();
-
-		// Invoke SQL query.
-		this.connection.query(sql, (err, result) => {
-
-			// ? If there are any errors related to the query.
-			if (err) {
-				console.error(err.stack);
-				return; // Terminate.
-			}
-			callback(result);
-		});
-	}
-
-
-	/**
-	 * Getter: ENV Credentials.
-	 * @returns {Object}
-	 */
-	get envCredentials() {
-		return {
-			host: process.env.DB_HOST,
-			user: process.env.DB_USER,
-			password: process.env.DB_PASS,
-			database: process.env.DB_NAME
-		}
-	}
-
-
-	/**
-	 * Console Out
-	 * A custom console logger for this class.
-	 * @param message
-	 */
-	cout(message) {
-		const reset = '\x1b[0m';
-		const primary = '\x1b[35m';
-		const secondary = '\x1b[36m';
-		console.log(
-			primary + 'MySQL: ' + secondary + '%s' + reset,
-			message,
-		);
-	}
-}
-
+var MySQL = /** @class */ (function () {
+    /**
+     * Constructor
+     */
+    function MySQL(login) {
+        var _this = this;
+        MySQL.makeConnectionPool(MySQL.config(login), function (pool) {
+            _this.pool = pool;
+        });
+        this.id = crypto
+            .createHash('md5')
+            .update(Date.now().toString())
+            .digest('base64');
+    }
+    /**
+     * Make Connection Pool
+     * @param config
+     * @param callback
+     */
+    MySQL.makeConnectionPool = function (config, callback) {
+        callback(mysql2.createPool(config));
+    };
+    /**
+     * Get Instance (Singleton)
+     */
+    MySQL.getInstance = function (login) {
+        if (MySQL.instance instanceof MySQL) {
+            MySQL.cout("Using existing instance (" + MySQL.instance.getId() + ")");
+            return MySQL.instance;
+        }
+        else {
+            MySQL.instance = new MySQL(login);
+            MySQL.cout("New instance (" + MySQL.instance.getId() + ")");
+            return MySQL.instance;
+        }
+    };
+    /**
+     * Get ID
+     */
+    MySQL.prototype.getId = function () {
+        return this.id;
+    };
+    /**
+     * Query
+     * @param sql
+     */
+    MySQL.prototype.query = function (sql) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.pool.query(sql, function (err, result) {
+                if (err)
+                    resolve(err);
+                else
+                    resolve(result);
+            });
+        }).catch(function (promiseError) {
+            MySQL.error(promiseError);
+        });
+    };
+    /**
+     * Prepared Statement
+     * @param sql
+     * @param data
+     */
+    MySQL.prototype.prep = function (sql, data) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.pool.execute(sql, data, function (err, result) {
+                if (err)
+                    resolve(err);
+                else
+                    resolve(result);
+            });
+        }).catch(function (promiseError) {
+            MySQL.error(promiseError);
+        });
+    };
+    /**
+     * SHA256
+     * @param value
+     * @constructor
+     */
+    MySQL.SHA256 = function (value) {
+        return crypto.createHash('sha256').update(value).digest('base64');
+    };
+    /**
+     * Config
+     */
+    MySQL.config = function (login) {
+        var config = {
+            host: login.host,
+            user: login.user,
+            password: login.password,
+            multipleStatements: true,
+            waitForConnections: true,
+            connectionLimit: 10,
+            queueLimit: 0
+        };
+        if (login.schema)
+            config.database = login.schema;
+        return config;
+    };
+    /**
+     * Console Out
+     * @param message
+     */
+    MySQL.cout = function (message) {
+        var reset = '\x1b[0m';
+        var primary = '\x1b[35m';
+        var secondary = '\x1b[36m';
+        console.log(primary + 'MySQL: ' + secondary + '%s' + reset, message);
+    };
+    /**
+     * Error message
+     * @param message
+     */
+    MySQL.error = function (message) {
+        var reset = '\x1b[0m';
+        var primary = '\x1b[35m';
+        var secondary = '\x1b[31m';
+        console.log(primary + 'MySQL: ' + secondary + '%s' + reset, message);
+    };
+    return MySQL;
+}());
 module.exports = MySQL;
