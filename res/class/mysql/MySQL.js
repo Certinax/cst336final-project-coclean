@@ -59,21 +59,14 @@ var MySQL = /** @class */ (function () {
     MySQL.prototype.query = function (sql) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            _this.pool.query(sql, function (err, rows) {
-                if (err) {
-                    reject(new Error(err));
-                }
-                else {
-                    if (rows.length > 0) {
-                        resolve(rows);
-                    }
-                    else
-                        reject(new Error('There is no result.'));
-                }
+            _this.pool.query(sql, function (err, result) {
+                if (err)
+                    resolve(err);
+                else
+                    resolve(result);
             });
         }).catch(function (promiseError) {
-            MySQL.error('Query returned no result.');
-            throw new Error('Test');
+            MySQL.error(promiseError);
         });
     };
     /**
@@ -85,21 +78,22 @@ var MySQL = /** @class */ (function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
             _this.pool.execute(sql, data, function (err, result) {
-                if (err) {
-                    reject(new Error(err));
-                }
-                else {
-                    if (result.length > 0) {
-                        resolve(result);
-                    }
-                    else {
-                        reject(new Error(err));
-                    }
-                }
+                if (err)
+                    resolve(err);
+                else
+                    resolve(result);
             });
         }).catch(function (promiseError) {
-            MySQL.error('Prepared statement returned no result.');
+            MySQL.error(promiseError);
         });
+    };
+    /**
+     * SHA256
+     * @param value
+     * @constructor
+     */
+    MySQL.SHA256 = function (value) {
+        return crypto.createHash('sha256').update(value).digest('base64');
     };
     /**
      * Config

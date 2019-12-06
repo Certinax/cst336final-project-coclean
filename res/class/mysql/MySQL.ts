@@ -72,18 +72,12 @@ class MySQL {
 	 */
 	public query(sql: string) : Promise<any> {
 		return new Promise((resolve, reject) => {
-			this.pool.query(sql, (err: any, rows: any) => {
-				if (err) {
-					reject(new Error(err));
-				} else {
-					if (rows.length > 0) {
-						resolve(rows);
-					} else reject(new Error('There is no result.'));
-				}
+			this.pool.query(sql, (err: any, result: any) => {
+				if (err) resolve(err);
+				else resolve(result);
 			});
 		}).catch((promiseError) => {
-			MySQL.error('Query returned no result.');
-			throw new Error(promiseError);
+			MySQL.error(promiseError);
 		});
 	}
 
@@ -95,20 +89,21 @@ class MySQL {
 	public prep(sql : string, data : Array<any>) : Promise<any> {
 		return new Promise((resolve, reject) => {
 			this.pool.execute(sql, data, (err : any, result : any) => {
-				if (err) {
-					reject(new Error(err));
-				} else {
-					if (result.length > 0) {
-						resolve(result);
-					} else {
-						reject(new Error(err))
-					}
-				}
+				if (err) resolve(err);
+				else resolve(result);
 			});
 		}).catch((promiseError) => {
-			MySQL.error('Prepared statement returned no result.');
-			throw new Error(promiseError);
+			MySQL.error(promiseError);
 		});
+	}
+
+	/**
+	 * SHA256
+	 * @param value
+	 * @constructor
+	 */
+	public static SHA256(value: string): string {
+		return crypto.createHash('sha256').update(value).digest('base64');
 	}
 
 	/**
