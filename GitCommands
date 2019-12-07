@@ -1,0 +1,14 @@
+git See branches:
+    git branch
+checkout new branch:
+    git checkout -b <branchName>
+    Remember to be in master
+add branch remotely
+    git push origin -u <branchName>
+check out existing branch:
+    git checkout <branchName>
+delete branch locally:
+    git branch -d <branchName>
+delete remotely
+    git push origin --delete <branchName>
+
