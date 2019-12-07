@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const apiRouter = require('./api/apiRouter');
 const testRouter = require('./test/test');
+const profileRouter = require('./profile');
 
 // Landing page.
 router.get("/", function(req, res, next) {
@@ -11,8 +12,6 @@ router.get("/", function(req, res, next) {
       link: "ToBe Added",
       //username: req.session.username,
       message: 'We are overqualified.'
-      
-    
   });
 });
 
@@ -31,5 +30,7 @@ router.use('/api', apiRouter);
 // ! TEST ROUTER FOR API
 // TODO: Delete when obsolete.
 router.use('/test', testRouter);
+
+router.use('/profile', profileRouter);
 
 module.exports = router;
