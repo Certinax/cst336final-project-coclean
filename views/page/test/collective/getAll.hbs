@@ -1,0 +1,32 @@
+<section class="py-5">
+	<div class="container">
+		<h1>HTTP GET /api/collective</h1>
+		<button class="btn btn-primary" type="button">Get all collectives</button>
+	</div>
+	<div class="container mt-5">
+		<p>How to use</p>
+		<div class="card p-3">
+			<pre>Http.request.get('/api/collective', function (result) {
+	console.log(result);
+});</pre>
+		</div>
+	</div>
+</section>
+<hr>
+<section class="py-5">
+	<div class="container">
+		<div id="code" class="card p-3 small text-monospace bg-light">
+		</div>
+	</div>
+</section>
+<script type="module">
+	import {Http} from '/js/class/http/Http.js';
+	function onFetch() {
+		Http.request.get('/api/collective', function (result) {
+			document.getElementById('code').innerText = result;
+		});
+	}
+	window.onload = function () {
+		document.querySelector('button').onclick = onFetch;
+	}
+</script>
