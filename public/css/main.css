@@ -1,5 +1,17 @@
+body,
+html {
+  height: 100%;
+}
+
 body {
+  display: flex;
+  flex-direction: column;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+
+}
+
+.content {
+  flex-grow: 1;
 }
 
 h1 {
@@ -9,4 +21,16 @@ h1 {
 a {
   color: #00b7ff;
   text-decoration: none;
+}
+
+.footer{
+  background-color: #40526C;
+}
+
+.footerContent{
+  color: white;
+}
+
+.headerBackground{
+  background-color: #EAEAEA;
 }
