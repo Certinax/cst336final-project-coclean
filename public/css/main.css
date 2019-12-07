@@ -79,3 +79,13 @@ a {
 .greyBackground {
   background-color: var(--backgroundGrey);
 }
+
+.intro-card {
+  color: var(--backgroundBlue);
+}
+
+@media (max-width: 576px) {
+  .go-first {
+    order: -1;
+  }
+}
