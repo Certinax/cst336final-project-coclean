@@ -61,6 +61,13 @@ a {
   background-color: var(--finishGreen);
 }
 
+.btn-outline-finish,
+.btn-outline-finish:hover {
+  color: var(--finishGreen);
+  background-color: transparent !important;
+  border: 2px solid var(--finishGreen);
+}
+
 .signupFont {
   font-size: 1.5em;
 }
