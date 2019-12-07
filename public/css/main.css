@@ -9,8 +9,6 @@
   --overdueRed: #D8737F;
 }
 
-
-
 body,
 html {
   height: 100%;
@@ -25,6 +23,7 @@ body {
 
 .content {
   flex-grow: 1;
+  background-color: var(--backgroundGrey);
 }
 
 h1 {
@@ -36,10 +35,35 @@ a {
   text-decoration: none;
 }
 
-.footer{
+.darkBackground{
   background-color: var(--backgroundBlue);
 }
 
-.footerContent{
+.lightFont{
   color: var(--lightFont);
 }
+
+.mellowYellow{
+  color: var(--mellowYellow);
+}
+
+.overdueRed{
+  color: var(--overdueRed);
+}
+
+.finishGreen{
+  color: var(--finishGreen);
+}
+
+.btn-default {
+  background-color: var(--finishGreen);
+}
+
+.signupFont{
+  font-size: 1.5em;
+}
+
+.greyBackground{
+  background-color: var(--backgroundGrey);
+}
+
