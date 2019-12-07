@@ -1,6 +1,48 @@
-<h1>{{title}}</h1>
-<h3>Welcome to {{title}}</h3>
-<p>{{message}}</p>
+<div class="darkBackground py-5">
+  <div class="container lightFont pt-5">
+    <div class="text-center">
+      <h3 class="mb-4">Keeping shared apartments <span class="mellowYellow">clean</span> and <span
+          class="mellowYellow">organized</span>
+        can be a challenge.</h3>
+      <h3>Whether it needs to be <span class="mellowYellow">done</span>, is <span class="finishGreen">done</span>,
+        or is <span class="overdueRed">overdue</span>,<br> it's easily trackable in CoClean. <br> CoClean is a
+        scheduling
+        tool that helps you <br>and your roommates keep track of chores.</h3>
+    </div>
+    <div class="my-5 text-center">
+      <button class="btn btn-finish" data-toggle="modal" data-target="#modalRegisterForm"><span
+          class="lightFont signupFont">Sign Up</span></button>
+    </div>
+  </div>
+</div>
+<div class="greyBackground py-5">
+  <div class="featureHolder1 d-flex justify-content-around my-5">
+    <div class="imageDiv1 w-50 m-5">
+      <img
+        src="https://images.unsplash.com/photo-1531824475211-72594993ce2a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+        alt="" class="img-responsive img-fluid w-100 mx-auto d-block">
+    </div>
+    <div class="descriptionDiv1 w-50 m-5 text-center">
+      <h2>Amazing Description</h2>
+      <p>- This Div will describe said functionality</p>
+      <p>- This Div will describe said functionality</p>
+      <p>- This Div will describe said functionality</p>
+    </div>
+  </div>
+  <div class="featureHolder1 d-flex justify-content-around my-5">
+    <div class="descriptionDiv2 w-50 m-5 text-center">
+      <h2>Amazing Description</h2>
+      <p>- This Div will describe said functionality</p>
+      <p>- This Div will describe said functionality</p>
+      <p>- This Div will describe said functionality</p>
+    </div>
+    <div class="imageDiv2 w-50 m-5">
+      <img
+        src="https://images.unsplash.com/photo-1531824475211-72594993ce2a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+        alt="" class="img-responsive img-fluid w-100 mx-auto d-block">
+    </div>
+  </div>
+</div>
 
 <div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
@@ -14,20 +56,33 @@
       </div>
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
-          <i class="fas fa-user prefix grey-text"></i>
-          <input type="text" id="orangeForm-name" class="form-control validate">
-          <label data-error="wrong" data-success="right" for="orangeForm-name">Your name</label>
+          <i class="mdi mdi-account prefix grey-text"></i>
+          <input type="text" id="firstname" class="form-control validate">
+          <label data-error="Required field" data-success="" for="firstname">Your firstname</label>
         </div>
+
         <div class="md-form mb-5">
-          <i class="fas fa-envelope prefix grey-text"></i>
-          <input type="email" id="orangeForm-email" class="form-control validate">
-          <label data-error="wrong" data-success="right" for="orangeForm-email">Your email</label>
+          <i class="mdi mdi-account prefix grey-text"></i>
+          <input type="text" id="lastname" class="form-control validate">
+          <label data-error="Required field" data-success="" for="lastname">Your lastname</label>
+        </div>
+
+        <div class="md-form mb-5">
+          <i class="mdi mdi-email prefix grey-text"></i>
+          <input type="email" id="email" class="form-control validate">
+          <label data-error="Not valid email" data-success="" for="email">Your email</label>
         </div>
 
         <div class="md-form mb-4">
-          <i class="fas fa-lock prefix grey-text"></i>
-          <input type="password" id="orangeForm-pass" class="form-control validate">
-          <label data-error="wrong" data-success="right" for="orangeForm-pass">Your password</label>
+          <i class="mdi mdi-lock prefix grey-text"></i>
+          <input type="password" id="password" class="form-control validate">
+          <label data-error="" data-success="" for="password">Your password</label>
+        </div>
+
+        <div class="md-form mb-4">
+          <i class="mdi mdi-lock prefix grey-text"></i>
+          <input type="password" id="re-password" class="form-control validate">
+          <label data-error="" data-success="" for="re-password">Re-enter password</label>
         </div>
 
       </div>
@@ -37,49 +92,3 @@
     </div>
   </div>
 </div>
-
-<div class="text-center">
-  <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalRegisterForm">Launch
-    Modal Register Form</a>
-</div>
-<div class="darkBackground py-5">
-    <div class="container lightFont pt-5">
-        <div class="text-center">
-        <h3 class="mb-4">Keeping shared apartments <span class="mellowYellow">clean</span> and <span class="mellowYellow">organized</span>
-            can be a challenge.</h3>
-        <h3>Whether it needs to be <span class="mellowYellow">done</span>, is <span class="finishGreen">done</span>,
-         or is <span class="overdueRed">overdue</span>,<br> it's easily trackable in CoClean. <br> CoClean is a scheduling
-            tool that helps you <br>and your roommates keep track of chores.</h3>
-        </div>
-        <div class="my-5 text-center">
-                <button class=" btn btn-default"><span class="lightFont signupFont">Sign Up</span></button>
-        </div>
-    </div>
-</div>
-<div class="greyBackground py-5">
-    <div class="featureHolder1 d-flex justify-content-around my-5">
-        <div class="imageDiv1 w-50 m-5">
-            <img src="https://images.unsplash.com/photo-1531824475211-72594993ce2a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
-                 alt="" class="img-responsive img-fluid w-100 mx-auto d-block">
-        </div>
-        <div class="descriptionDiv1 w-50 m-5 text-center">
-            <h2>Amazing Description</h2>
-            <p>- This Div will describe said functionality</p>
-            <p>- This Div will describe said functionality</p>
-            <p>- This Div will describe said functionality</p>
-        </div>
-    </div>
-    <div class="featureHolder1 d-flex justify-content-around my-5">
-        <div class="descriptionDiv2 w-50 m-5 text-center">
-            <h2>Amazing Description</h2>
-            <p>- This Div will describe said functionality</p>
-            <p>- This Div will describe said functionality</p>
-            <p>- This Div will describe said functionality</p>
-        </div>
-        <div class="imageDiv2 w-50 m-5">
-            <img src="https://images.unsplash.com/photo-1531824475211-72594993ce2a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
-                 alt="" class="img-responsive img-fluid w-100 mx-auto d-block">
-        </div>
-    </div>
-</div>
-

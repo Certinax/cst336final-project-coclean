@@ -1,12 +1,11 @@
-
 :root {
-  --darkLight: #F4F4F4;
-  --lightFont: #F7F7F7;
-  --backgroundGrey: #EAEAEA;
-  --backgroundBlue: #40526C;
-  --mellowYellow: #FCBB6D;
-  --finishGreen: #4AB19D;
-  --overdueRed: #D8737F;
+  --darkLight: #f4f4f4;
+  --lightFont: #f7f7f7;
+  --backgroundGrey: #eaeaea;
+  --backgroundBlue: #40526c;
+  --mellowYellow: #fcbb6d;
+  --finishGreen: #4ab19d;
+  --overdueRed: #d8737f;
 }
 
 body,
@@ -17,8 +16,7 @@ html {
 body {
   display: flex;
   flex-direction: column;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-
+  /* font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; */
 }
 
 .content {
@@ -35,23 +33,23 @@ a {
   text-decoration: none;
 }
 
-.darkBackground{
+.darkBackground {
   background-color: var(--backgroundBlue);
 }
 
-.lightFont{
+.lightFont {
   color: var(--lightFont);
 }
 
-.mellowYellow{
+.mellowYellow {
   color: var(--mellowYellow);
 }
 
-.overdueRed{
+.overdueRed {
   color: var(--overdueRed);
 }
 
-.finishGreen{
+.finishGreen {
   color: var(--finishGreen);
 }
 
@@ -59,11 +57,14 @@ a {
   background-color: var(--finishGreen);
 }
 
-.signupFont{
+.btn-finish {
+  background-color: var(--finishGreen);
+}
+
+.signupFont {
   font-size: 1.5em;
 }
 
-.greyBackground{
+.greyBackground {
   background-color: var(--backgroundGrey);
 }
-
