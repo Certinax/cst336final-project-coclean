@@ -1,5 +1,30 @@
+
+:root {
+  --darkLight: #F4F4F4;
+  --lightFont: #F7F7F7;
+  --backgroundGrey: #EAEAEA;
+  --backgroundBlue: #40526C;
+  --mellowYellow: #FCBB6D;
+  --finishGreen: #4AB19D;
+  --overdueRed: #D8737F;
+}
+
+
+
+body,
+html {
+  height: 100%;
+}
+
 body {
+  display: flex;
+  flex-direction: column;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+
+}
+
+.content {
+  flex-grow: 1;
 }
 
 h1 {
@@ -9,4 +34,12 @@ h1 {
 a {
   color: #00b7ff;
   text-decoration: none;
+}
+
+.footer{
+  background-color: var(--backgroundBlue);
+}
+
+.footerContent{
+  color: var(--lightFont);
 }

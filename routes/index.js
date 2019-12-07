@@ -7,8 +7,12 @@ const testRouter = require('./test/test');
 // Landing page.
 router.get("/", function(req, res, next) {
   res.render("index", {
-    title: "Final Project",
-		message: 'We are overqualified.',
+      title: "Final Project",
+      link: "ToBe Added",
+      //username: req.session.username,
+      message: 'We are overqualified.'
+      
+    
   });
 });
 
