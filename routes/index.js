@@ -1,14 +1,9 @@
 const MySQL = require("../res/class/mysql/MySQL");
 const express = require("express");
 const router = express.Router();
-<<<<<<< HEAD
 const apiRouter = require('./api/apiRouter');
 const testRouter = require('./test/test');
 const profileRouter = require('./profile');
-=======
-const apiRouter = require("./api/apiRouter");
-const testRouter = require("./test/test");
->>>>>>> 7840c0808ba14b83f47a95b683b4cff96167a7c8
 
 // Landing page.
 router.get("/", function(req, res, next) {
