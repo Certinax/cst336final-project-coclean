@@ -1,3 +1,16 @@
+
+:root {
+  --darkLight: #F4F4F4;
+  --lightFont: #F7F7F7;
+  --backgroundGrey: #EAEAEA;
+  --backgroundBlue: #40526C;
+  --mellowYellow: #FCBB6D;
+  --finishGreen: #4AB19D;
+  --overdueRed: #D8737F;
+}
+
+
+
 body,
 html {
   height: 100%;
@@ -24,9 +37,9 @@ a {
 }
 
 .footer{
-  background-color: #40526C;
+  background-color: var(--backgroundBlue);
 }
 
 .footerContent{
-  color: white;
+  color: var(--lightFont);
 }
