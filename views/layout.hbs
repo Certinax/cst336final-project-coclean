@@ -3,7 +3,7 @@
 
 <head>
   <title>{{title}}</title>
-  <link rel='stylesheet' href='/css/main.css' />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -13,23 +13,24 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
-  <script src="https://kit.fontawesome.com/b46e23f1bf.js" crossorigin="anonymous"></script>
-    <!-- Material Design Bootstrap -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.11/js/mdb.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.11/css/mdb.min.css" rel="stylesheet">
+  {{!-- <script src="https://kit.fontawesome.com/b46e23f1bf.js" crossorigin="anonymous"></script> --}}
+  <!-- Material Design Bootstrap -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.11/js/mdb.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.11/css/mdb.min.css" rel="stylesheet">
 
-    <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet" />
+  {{!-- MDICONS --}}
+  <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.5.95/css/materialdesignicons.min.css">
+  <link rel='stylesheet' href='/css/main.css' />
 </head>
 
 <body class="">
-{{>header}}
+  {{>header}}
 
-<div class="content">
-  {{{body}}}
-</div>
+  <div class="content">
+    {{{body}}}
+  </div>
 
-{{>footer}}
+  {{>footer}}
 </body>
 
 </html>
