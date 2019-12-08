@@ -15,4 +15,11 @@ router.get("/new", function(req, res) {
   });
 });
 
+router.get("/edit", function(req, res) {
+  res.render("page/collective/edit", {
+    collective: true,
+    title: "Edit Collective"
+  });
+});
+
 module.exports = router;

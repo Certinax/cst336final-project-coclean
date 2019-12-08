@@ -69,6 +69,10 @@ datalist {
   background-color: var(--finishGreen);
 }
 
+.btn-overdue {
+  background-color: var(--overdueRed);
+}
+
 .btn-outline-finish,
 .btn-outline-finish:hover {
   color: var(--finishGreen);
