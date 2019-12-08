@@ -72,6 +72,13 @@ a {
   border: 2px solid var(--finishGreen);
 }
 
+.btn-outline-overdue,
+.btn-outline-overdue:hover {
+  color: var(--overdueRed);
+  background-color: transparent !important;
+  border: 2px solid var(--overdueRed);
+}
+
 .signupFont {
   font-size: 1.5em;
 }
