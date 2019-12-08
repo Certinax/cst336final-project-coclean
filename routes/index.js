@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const apiRouter = require('./api/apiRouter');
-const testRouter = require('./test/test');
-const profileRouter = require('./profile');
+const apiRouter = require("./api/apiRouter");
+const testRouter = require("./test/test");
+const profileRouter = require("./profile");
 const collectiveRouter = require("./collective");
 
 // Landing page.
@@ -23,9 +23,7 @@ router.use("/api", apiRouter);
 // TODO: Delete when obsolete.
 router.use("/test", testRouter);
 
-
-router.use('/profile', profileRouter);
+router.use("/profile", profileRouter);
 router.use("/collective", collectiveRouter);
-
 
 module.exports = router;
