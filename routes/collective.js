@@ -8,9 +8,9 @@ router.get("/", function(req, res) {
   });
 });
 
-router.get("/new-collective", function(req, res) {
+router.get("/new", function(req, res) {
   res.render("page/collective/new-collective", {
-    collective: false,
+    collective: true,
     title: "Create Collective"
   });
 });

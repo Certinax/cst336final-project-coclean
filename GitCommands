@@ -12,3 +12,5 @@ delete branch locally:
 delete remotely
     git push origin --delete <branchName>
 
+pull specific branch from remote and create one locally:
+    git checkout -t origin/<branchName>
