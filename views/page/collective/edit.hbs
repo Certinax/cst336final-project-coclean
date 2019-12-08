@@ -1,0 +1,66 @@
+<div class="container text-center mt-5">
+  <h2 class="darkFont">{{title}}</h2>
+
+  <form class="mt-3">
+    <div class="form-row justify-content-center">
+      <div class="form-group col-md-6">
+        <div class="d-flex justify-content-start">
+          <label for="collectiveName">Name</label>
+        </div>
+        <input type="email" class="form-control" id="collectiveName" placeholder="Collective Name">
+      </div>
+    </div>
+    <div class="form-row justify-content-center">
+      <div class="form-group col-md-6">
+        <div class="d-flex justify-content-start">
+          <label for="description">Description</label>
+        </div>
+        <textarea type="text" class="form-control" id="description" placeholder="Type something" rows="5"></textarea>
+      </div>
+    </div>
+    <div class="form-row justify-content-center">
+      <div class="form-group col-md-6">
+        <div class="d-flex justify-content-start">
+          <label for="admin">Admin</label>
+        </div>
+        <input disabled type="text" class="form-control" id="admin" placeholder="Christina Meyer">
+      </div>
+    </div>
+    <div class="form-row justify-content-center">
+      <div class="form-group col-md-6">
+        <div class="d-flex justify-content-start">
+          <label for="inputGroupFile01">Collective picture</label>
+        </div>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+          </div>
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row justify-content-center">
+      <div class="form-group col-md-6">
+        <div class="d-flex justify-content-start">
+          <label for="school">School</label>
+        </div>
+        <input type="text" autocomplete="off" list="colleges" class="form-control" id="school" placeholder="School">
+        <datalist id="colleges">
+          <option value="CSU Monterey Bay"></option>
+          <option value="OsloMet"></option>
+          <option value="UiO"></option>
+        </datalist>
+      </div>
+    </div>
+  </form>
+
+
+  <div class="btn-group-vertical mt-2 mb-4">
+    <button id="update" class="btn btn-finish my-2"><span class="lightFont signupFont">Update</span></button>
+    <button id="delete" class="btn btn-overdue my-2"><span class="lightFont signupFont">Delete</span></button>
+  </div>
+
+</div>
