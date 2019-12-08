@@ -104,3 +104,16 @@ datalist {
     order: -1;
   }
 }
+
+/* Smartphones ----------- */
+@media only screen and (max-width: 760px) {
+  .nav-fixed {
+    position: fixed;
+    width: 100%;
+    z-index: 10;
+  }
+  .container,
+  .container-fluid {
+    padding-top: 3rem;
+  }
+}
