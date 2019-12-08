@@ -1,3 +1,66 @@
 <div class="container text-center mt-5">
     <h2>{{title}}</h2>
+    <img height="150px" width="150px"
+         src="https://images.unsplash.com/photo-1531220847861-69e336daffa0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+         alt="user defined image" class="rounded-circle my-3">
+
+    <h5>Hi {{username}}!</h5>
+
+    <form>
+        <div class="form-row justify-content-center">
+            <div class="form-group col-md-6">
+                <div class="d-flex justify-content-start">
+                    <label for="firstName">First Name</label>
+                </div>
+                <input type="email" class="form-control" id="firstName" placeholder="First Name">
+            </div>
+        </div>
+        <div class="form-row justify-content-center">
+            <div class="form-group col-md-6">
+                <div class="d-flex justify-content-start">
+                    <label for="lastName">Last Name</label>
+                </div>
+                <input type="text" class="form-control" id="lastName" placeholder="Last Name">
+            </div>
+        </div>
+        <div class="form-row justify-content-center">
+            <div class="form-group col-md-6">
+                <div class="d-flex justify-content-start">
+                    <label for="email">Email</label>
+                </div>
+                <input disabled type="text" class="form-control" id="email" placeholder="email">
+            </div>
+        </div>
+        <div class="form-row justify-content-center">
+            <div class="form-group col-md-6">
+                <div class="d-flex justify-content-start">
+                    <label for="inputGroupFile01">Profile Picture</label>
+                </div>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="inputGroupFile01"
+                               aria-describedby="inputGroupFileAddon01">
+                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-row justify-content-center">
+            <div class="form-group col-md-6">
+                <div class="d-flex justify-content-start">
+                    <label for="school">School</label>
+                </div>
+                <input type="text" class="form-control" id="school" placeholder="school">
+            </div>
+        </div>
+    </form>
+
+    <div class="my-5 text-center">
+        <button class="btn btn-finish" data-toggle="modal"><span
+                class="lightFont signupFont">Update</span></button>
+    </div>
+
 </div>
