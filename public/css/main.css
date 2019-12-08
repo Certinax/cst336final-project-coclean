@@ -79,3 +79,17 @@ a {
 .greyBackground {
   background-color: var(--backgroundGrey);
 }
+
+.intro-card {
+  color: var(--backgroundBlue);
+}
+
+.modal-open {
+  overflow: hidden !important;
+}
+
+@media (max-width: 576px) {
+  .go-first {
+    order: -1;
+  }
+}
