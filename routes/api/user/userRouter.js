@@ -1,14 +1,12 @@
 const express = require("express");
 const userApi = express.Router();
 const user = require('../../../res/class/api/orm/User');
-const statusObject = require('../../../res/class/api/StatusObject');
-const requestBody = require('../../../res/class/api/orm/RequestBody');
 const responseBody = require('../../../res/class/api/orm/ResponseBody');
 const crudOperation = require('../../../res/class/api/orm/CrudOperation');
 const mysql = require('../../../res/class/mysql/MySQL');
 
 
-// * Get all users.
+// * Get All Users.
 userApi.get('/', (req, res, next) => {
 	user.fetchAll((result) => {
 		res.json(
@@ -25,7 +23,7 @@ userApi.get('/', (req, res, next) => {
 });
 
 
-// * Get specific user.
+// * Get Specific User.
 userApi.get('/:email', (req, res, next) => {
 	const {email} = req.params;
 	user.fetch(email, (result) => {
@@ -44,92 +42,85 @@ userApi.get('/:email', (req, res, next) => {
 });
 
 
-// * Create user.
+// * Create User.
 userApi.post('/', (req, res, next) => {
 	const {name,surname,email,password} = req.body;
-	const requestBody = requestBody.post.create.user(name,surname,email,password);
-	user.create(requestBody, (result) => {
+	user.create({name,surname,email,password}, (result) => {
 		if (!result) res.json([]);
-		res.json(
-			new responseBody(
-				'user',
-				crudOperation.CREATE,
-				result[1][0]["@out"] === 'User created!',
-				`User (${email}) was successfully created`,
-				`Email (${email}) has already been taken.`,
-				result[1][0]["@out"]
-			)
-		);
-	});
-});
-
-
-// * Update user.
-// TODO: Fix error handling.
-userApi.put('/:email', (req, res, next) => {
-	const {email} = req.params;
-	console.log(req.params);
-	let {oldPassword, name, surname, newPassword} = req.body;
-	oldPassword = mysql.SHA256(oldPassword);
-	user.fetch(email, (user) => {
-		console.log(user[0]);
-		//if (!user || user.length < 1) res.json([]);
-		const loginMatch = email === user[0].email && oldPassword === user[0].password;
-		if (loginMatch) {
-			user.edit({name,surname,email,newPassword}, (result) => {
-				if (!result) {
-					res.json([]);
-				} else {
-					res.json(
-						new responseBody(
-							'user',
-							crudOperation.UPDATE,
-							result[1][0]["@out"] === 'User updated!',
-							`User (${email}) was successfully updated.`,
-							`User (${email}) was not updated. Wrong email or password.`,
-							result[1][0]["@out"]
-						)
-					);
-				}
-			});
-		} else {
+		else {
 			res.json(
 				new responseBody(
 					'user',
-					crudOperation.UPDATE,
-					loginMatch,
-					'',
-					'Login incorrect.',
-					[],
+					crudOperation.CREATE,
+					result[1][0]["@out"] === 'User created!',
+					`User (${email}) was successfully created`,
+					`Email (${email}) has already been taken.`,
+					result[1][0]["@out"]
 				)
 			);
 		}
 	});
 });
 
-// * Delete user.
-// TODO: Fix error handling and API design.
-userApi.delete('/:email/:password', (req, res, next) => {
-	const {email, password} = req.params;
-	const credentials = {email: email, password: password};
-	user.delete(credentials, (result) => {
-		const argValidate = {
-			successCondition: result[1][0]["@out"] === 'User deleted!',
-			operation: 'delete',
-			entity: 'user',
-			successText: `User (${email}) was successfully deleted`,
-			failText: `User (${email}) was not deleted. Wrong email or password.`,
-		};
-		statusObject.validate(argValidate, (status) => {
-			const argProcess = {
-				mysqlResult: result,
-				statusObject: status
-			};
-			statusObject.produce(argProcess, (out) => {
-				console.log(out);
-				res.json(out);
-			});
-		});
+
+// * Update User.
+userApi.put('/:email', (req, res, next) => {
+	const {email} = req.params;
+	const {name, surname, newPassword} = req.body;
+	user.edit({name,surname,email,newPassword}, (result) => {
+		res.json(new responseBody(
+			'user',
+			crudOperation.UPDATE,
+			result[1][0]["@out"] === 'User updated!',
+			`User (${email}) was successfully updated!`,
+			`User (${email}) was not updated!`,
+			result
+		));
+	});
+});
+
+
+// * Delete User.
+userApi.delete('/:email', (req, res, next) => {
+	const email = req.params.email;
+	const password = mysql.SHA256(req.body.password);
+	user.delete({email,password}, (result) => {
+		res.json(new responseBody(
+			'user',
+			crudOperation.DELETE,
+			result[1][0]["@out"] === 'User deleted!',
+			`User (${email}) was successfully deleted!`,
+			`Incorrect credentials for user (${email})`,
+			result
+		));
+	});
+});
+
+
+// * User Login.
+userApi.post('/login/:email', (req, res, next) => {
+	user.login({email: req.params.email, password: req.body.password}, (result) => {
+		const email = req.params.email;
+		const password = mysql.SHA256(req.body.password);
+		if (result === false || password !== result[0].password) {
+			res.json(new responseBody(
+				'user',
+				crudOperation.READ,
+				false,
+				'',
+				`User (${email}) entered wrong login credentials.`,
+				false
+			));
+		} else {
+			res.json(new responseBody(
+				'user',
+				crudOperation.READ,
+				(password === result[0].password),
+				`User (${email}) successfully logged in.`,
+				`User (${email}) entered the wrong login credentials.`,
+				result,
+			));
+		}
 	});
 });
 

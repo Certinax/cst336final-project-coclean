@@ -1,4 +1,3 @@
-const MySQL = require("../res/class/mysql/MySQL");
 const express = require("express");
 const router = express.Router();
 const apiRouter = require('./api/apiRouter');
@@ -14,15 +13,6 @@ router.get("/", function(req, res, next) {
     //username: req.session.username,
     message: "We are overqualified.",
     home: true
-  });
-});
-
-// ! DB TEST (FOR DEBUGGING ONLY)
-// TODO: Delete when obsolete.
-router.get("/db_test", (req, res, nex) => {
-  const db = new MySQL();
-  db.query("SHOW PROCESSLIST", result => {
-    res.json(result);
   });
 });
 
