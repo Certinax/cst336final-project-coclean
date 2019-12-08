@@ -8,4 +8,11 @@ router.get("/", function(req, res) {
   });
 });
 
+router.get("/new-collective", function(req, res) {
+  res.render("page/collective/new-collective", {
+    collective: false,
+    title: "Create Collective"
+  });
+});
+
 module.exports = router;

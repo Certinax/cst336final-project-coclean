@@ -34,4 +34,6 @@ router.use("/test", testRouter);
 
 router.use("/collective", collectiveRouter);
 
+router.use("/new-collective", collectiveRouter);
+
 module.exports = router;
