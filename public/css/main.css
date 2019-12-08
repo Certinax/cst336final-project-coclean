@@ -103,6 +103,23 @@ datalist {
   overflow: hidden !important;
 }
 
+.hiddenRow {
+  padding: 0 !important;
+}
+
+.chore-table tr:nth-child(4n + 1),
+.chore-table tr:nth-child(4n + 2) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.chore-table tr:hover {
+  cursor: pointer;
+}
+
+.padz {
+  padding: 0.75rem;
+}
+
 @media (max-width: 576px) {
   .go-first {
     order: -1;
@@ -118,5 +135,13 @@ datalist {
   }
   .nav-space {
     padding-top: 3rem;
+  }
+}
+
+@media (max-width: 376px) {
+  .table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
   }
 }
