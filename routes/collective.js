@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", function(req, res) {
-  if (!req.loggedIn) {
+  if (req.loggedIn) {
     res.render("page/collective/select", {
       collective: true,
       title: "Collective"
@@ -10,7 +10,7 @@ router.get("/", function(req, res) {
   } else {
     res.render("page/collective/home", {
       collective: true,
-      title: "Collective"
+      title: "Collective" // TODO: Collectivename should be retreived from database
     });
   }
 });

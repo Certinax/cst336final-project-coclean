@@ -116,8 +116,7 @@ datalist {
     width: 100%;
     z-index: 10;
   }
-  .container,
-  .container-fluid {
+  .nav-space {
     padding-top: 3rem;
   }
 }
