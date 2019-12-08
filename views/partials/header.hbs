@@ -4,7 +4,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="ml-2">
-        <a class="navbar-brand mx-auto text-dark" href="#">{{title}}</a>
+        <a class="navbar-brand mx-auto text-dark" href="#">CoClean</a>
     </div>
     {{#if username}}
     Welcome: <span class="text-primary">{{username}}</span>
@@ -22,14 +22,14 @@
     {{/if}}
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            <li class="nav-item {{#if home}}active{{/if}}">
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Collective</a>
+            <li class="nav-item {{#if collective}}active{{/if}}">
+                <a class="nav-link" href="/collective">Collective</a>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link" href="#">Profile</a>
+            <li class="nav-item {{#if profile}}active{{/if}} dropdown">
+                <a class="nav-link" href="/profile">Profile</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link disabled" href="#">Disabled</a>
