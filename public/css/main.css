@@ -33,6 +33,10 @@ a {
   text-decoration: none;
 }
 
+datalist {
+  display: none;
+}
+
 .darkBackground {
   background-color: var(--backgroundBlue);
 }
