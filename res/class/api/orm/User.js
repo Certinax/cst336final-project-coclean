@@ -200,6 +200,7 @@ class User {
 	 * @param {function} callback
 	 */
 	static edit({name, surname, email, newPassword}, callback) {
+		newPassword = mysql.SHA256(newPassword);
 		const sql = `CALL edit_user("${name}","${surname}","${email}","${newPassword}",@out); SELECT @out;`;
 		db.query(sql)
 		.then(res => {
@@ -224,6 +225,22 @@ class User {
 			callback(res);
 		}).catch(err => {
 			callback([]);
+		});
+	}
+
+
+	/**
+	 * Login
+	 * @param {object} credentials
+	 * @param {string} credentials.email
+	 * @param {string} credentials.password
+	 * @param {function} callback
+	 */
+	static login({email, password}, callback) {
+		User.fetch(email, (result) => {
+			if (result.length === 0)
+				callback(false);
+			else callback(result);
 		});
 	}
 }
