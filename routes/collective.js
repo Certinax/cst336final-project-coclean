@@ -2,14 +2,21 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", function(req, res) {
-  res.render("page/collective/landingpage-no-collective", {
-    collective: true,
-    title: "Collective"
-  });
+  if (req.loggedIn) {
+    res.render("page/collective/select", {
+      collective: true,
+      title: "Collective"
+    });
+  } else {
+    res.render("page/collective/home", {
+      collective: true,
+      title: "Collective" // TODO: Collectivename should be retreived from database
+    });
+  }
 });
 
 router.get("/new", function(req, res) {
-  res.render("page/collective/new-collective", {
+  res.render("page/collective/new", {
     collective: true,
     title: "Create Collective"
   });
