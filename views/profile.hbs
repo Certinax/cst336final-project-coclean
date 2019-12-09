@@ -1,8 +1,8 @@
 <div class="container text-center mt-5 nav-space">
     <h2>{{title}}</h2>
     <img height="150px" width="150px"
-        src="https://images.unsplash.com/photo-1531220847861-69e336daffa0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
-        alt="user defined image" class="rounded-circle my-3">
+         src="https://images.unsplash.com/photo-1531220847861-69e336daffa0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+         alt="user defined image" class="rounded-circle my-3">
 
     <h5>Hi {{username}}!</h5>
 
@@ -42,7 +42,7 @@
                     </div>
                     <div class="custom-file">
                         <input type="file" class="custom-file-input" id="inputGroupFile01"
-                            aria-describedby="inputGroupFileAddon01">
+                               aria-describedby="inputGroupFileAddon01">
                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                     <label for="school">School</label>
                 </div>
                 <input type="text" autocomplete="off" list="colleges" class="form-control" id="school"
-                    placeholder="School">
+                       placeholder="School">
                 <datalist id="colleges">
                     <option value="CSU Monterey Bay"></option>
                     <option value="OsloMet"></option>
@@ -64,9 +64,15 @@
         </div>
     </form>
 
-    <div class="my-5 text-center">
-        <button class="btn btn-finish" data-toggle="modal" data-target="#updateModal"><span class="lightFont signupFont">Update</span></button>
-        <button class="btn btn-overdue" data-toggle="modal" data-target="#deleteModal"><span class="lightFont signupFont">Delete</span></button>
+    <div class="mt-5 text-center">
+        <button class="btn btn-finish" data-toggle="modal" data-target="#updateModal"><span
+                class="lightFont signupFont">Update</span></button>
+        <button class="btn btn-overdue" data-toggle="modal" data-target="#deleteModal"><span
+                class="lightFont signupFont">Delete</span></button>
+    </div>
+    <div class="text-center mt-2 mb-5">
+        <button class="btn btn-mellowYellow" data-toggle="modal" data-target="#updatePassModal"><span
+                class="lightFont signupFont">Update password</span></button>
     </div>
 
 </div>
@@ -87,15 +93,15 @@
                     <p id="deletedAuthorId"></p>
                 </div>
                 <div class="text-center mt-4">
-                    <button type="button" class="btn btn-finish" id="deleteProfile">Confirm</button>
-                    <button type="button" class="btn btn-overdue" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-finish lightFont" id="deleteProfile">Confirm</button>
+                    <button type="button" class="btn btn-overdue lightFont" data-dismiss="modal">Cancel</button>
                 </div>
-               <!-- <div class="text-center">
-                    <h5 id="deleteSuccess" class="text-success"></h5>
-                    <div id="deleteFailed">
-                        <h5 id="" class="text-danger">Delete Failed</h5>
-                    </div>
-                </div>-->
+                <!-- <div class="text-center">
+                     <h5 id="deleteSuccess" class="text-success"></h5>
+                     <div id="deleteFailed">
+                         <h5 id="" class="text-danger">Delete Failed</h5>
+                     </div>
+                 </div>-->
             </div>
         </div>
     </div>
@@ -106,33 +112,79 @@
 <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header text-center">
+            <div class="modal-header btn-finish text-center">
                 <h4 class="modal-title w-100 font-weight-bold">Please enter your password to confirm the update</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body mx-3">
-                    <div class="form-row justify-content-center">
-                        <div class="form-group col-md-6">
-                            <div class="d-flex justify-content-start">
-                                <label for="updatePasswordConfirm">Enter password</label>
-                            </div>
-                            <input type="text" class="form-control" id="updatePasswordConfirm" placeholder="Enter your password">
+                <div class="form-row justify-content-center">
+                    <div class="form-group col-md-6">
+                        <div class="d-flex justify-content-start">
+                            <label for="updatePasswordConfirm">Enter password</label>
                         </div>
+                        <input type="text" class="form-control" id="updatePasswordConfirm"
+                               placeholder="Enter your password">
                     </div>
                 </div>
-                <div class="text-center mt-4">
-                    <button type="button" class="btn btn-finish" id="updateProfile">Confirm</button>
-                    <button type="button" class="btn btn-overdue" data-dismiss="modal">Cancel</button>
-                </div>
-                <!-- <div class="text-center">
-                     <h5 id="deleteSuccess" class="text-success"></h5>
-                     <div id="deleteFailed">
-                         <h5 id="" class="text-danger">Delete Failed</h5>
-                     </div>
-                 </div>-->
             </div>
+            <div class="text-center mt-4">
+                <button type="button" class="btn btn-finish lightFont" id="updateProfile">Confirm</button>
+                <button type="button" class="btn btn-overdue lightFont" data-dismiss="modal">Cancel</button>
+            </div>
+            <!-- <div class="text-center">
+                 <h5 id="deleteSuccess" class="text-success"></h5>
+                 <div id="deleteFailed">
+                     <h5 id="" class="text-danger">Delete Failed</h5>
+                 </div>
+             </div>-->
+        </div>
+    </div>
+</div>
+
+<!--Update Password Modal-->
+<div class="modal fade" id="updatePassModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header btn-mellowYellow text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Please enter your old and new password to update</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+                <div class="form-row justify-content-center">
+                    <div class="form-group col-md-6">
+                        <div class="d-flex justify-content-start">
+                            <label for="oldpassword">Old password</label>
+                        </div>
+                        <input type="text" class="form-control" id="oldpassword"
+                               placeholder="Enter your old password">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body mx-3">
+                <div class="form-row justify-content-center">
+                    <div class="form-group col-md-6">
+                        <div class="d-flex justify-content-start">
+                            <label for="newPassword">New password</label>
+                        </div>
+                        <input type="text" class="form-control" id="newPassword"
+                               placeholder="Enter your new password">
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <button type="button" class="btn btn-finish lightFont" id="updateProfile">Confirm</button>
+                <button type="button" class="btn btn-overdue lightFont" data-dismiss="modal">Cancel</button>
+            </div>
+            <!-- <div class="text-center">
+                 <h5 id="deleteSuccess" class="text-success"></h5>
+                 <div id="deleteFailed">
+                     <h5 id="" class="text-danger">Delete Failed</h5>
+                 </div>
+             </div>-->
         </div>
     </div>
 </div>
