@@ -24,6 +24,7 @@ function createUser(){
             if(result.meta.success){
                 $("#modalRegisterForm").modal("hide");
                 $("#modalSignIn").modal("show");
+                console.log("This Worked");
             } else {
                 $("#feedbkSignup").html(result.result)
             }
