@@ -727,6 +727,150 @@ Select @svar1;
 -- ***************************************************************************** --
 
 
+-- ************************************************* -- 
+       -- PROCEDURE 10 ADD USER TO COLL --
+-- ************************************************* -- 
+USE `CoClean`;
+DELIMITER ::
+DROP PROCEDURE IF EXISTS add_user_coll::
+CREATE PROCEDURE add_user_coll(
+    IN p_user_ID INT(11),
+    IN p_coll_KEY VARCHAR(70),
+    
+    OUT p_message VARCHAR(150)
+)
+
+BEGIN
+START TRANSACTION;
+    SET @userExists = 0;
+    SET @collExists = 0;
+    SET @coll_ID_TEMP = 0;
+    SET @userInCollective = 0;
+
+    SELECT Count(*) INTO @userExists
+    FROM `User`
+    WHERE `ID` = p_user_ID;
+
+    SELECT `ID` INTO @coll_ID_TEMP
+    FROM `Collective`
+    WHERE `key` = p_coll_KEY;
+
+    SELECT Count(*) INTO @collExists
+    FROM `Collective`
+    WHERE `ID` = @coll_ID_TEMP; 
+    
+    SELECT Count(*) INTO @userInCollective
+    FROM `user_in_collective`
+    WHERE `user_ID` = p_user_ID
+    AND `collective_ID` = @coll_ID_TEMP; 
+
+    IF (@userExists < 1) THEN
+        SELECT CONCAT('User does not exist!') INTO p_message;
+
+    ELSEIF (@collExists < 1) THEN
+        SELECT CONCAT('Collective does not exist!') INTO p_message;
+    
+    ELSEIF (@userInCollective > 0) THEN
+        SELECT CONCAT('User already in collective.') INTO p_message;
+    
+    ELSE
+        INSERT INTO `user_in_collective` (`user_ID`, `collective_ID`) VALUES
+            (
+                p_user_ID,
+                @coll_ID_TEMP
+            );
+        SELECT CONCAT('User added to collective!') INTO p_message;
+    END IF;
+  
+COMMIT;
+END ::
+DELIMITER ;
+
+
+
+-- ************************************************* -- 
+        -- PROCEDURE 10 DELETE CHORE TEST CALL -- 
+-- ************************************************* -- 
+USE `CoClean`;
+SET @user_ID = 1;
+SET @coll_key = '804040170501dccb8479fcb835e1da1956870655';
+
+CALL add_user_coll(
+            @user_ID,
+            @coll_key,
+            @svar1);     
+            
+Select @svar1;
+
+
+
+-- ************************************************* -- 
+       -- PROCEDURE 11 DELETE USER FROM COLL --
+-- ************************************************* -- 
+USE `CoClean`;
+DELIMITER ::
+DROP PROCEDURE IF EXISTS delete_user_coll::
+CREATE PROCEDURE delete_user_coll(
+    IN p_user_ID INT(11),
+    IN p_coll_ID INT(11),
+    
+    OUT p_message VARCHAR(150)
+)
+
+BEGIN
+START TRANSACTION;
+    SET @userExists = 0;
+    SET @collExists = 0;
+    SET @userInCollective = 0;
+
+    SELECT Count(*) INTO @userExists
+    FROM `User`
+    WHERE `ID` = p_user_ID;
+
+    SELECT Count(*) INTO @collExists
+    FROM `Collective`
+    WHERE `ID` = p_coll_ID;
+
+    SELECT Count(*) INTO @userInCollective
+    FROM `user_in_collective`
+    WHERE `user_ID` = p_user_ID
+    AND `collective_ID` = p_coll_ID; 
+
+    IF (@userExists < 1) THEN
+        SELECT CONCAT('User does not exist!') INTO p_message;
+
+    ELSEIF (@collExists < 1) THEN
+        SELECT CONCAT('Collective does not exist!') INTO p_message;
+    
+    ELSEIF (@userInCollective < 1) THEN
+        SELECT CONCAT('User not found in collective.') INTO p_message;
+    ELSE
+        DELETE FROM `user_in_collective`
+        WHERE `user_ID` = p_user_ID
+        AND `collective_ID` = p_coll_ID;
+         SELECT CONCAT('User removed from collective.') INTO p_message;
+    END IF;
+  
+COMMIT;
+END ::
+DELIMITER ;
+
+
+-- ************************************************* -- 
+              -- PROCEDURE 11 TEST -- 
+-- ************************************************* -- 
+USE `CoClean`;
+SET @user_ID = 2;
+SET @coll_ID = 2;
+
+CALL delete_user_coll(
+            @user_ID,
+            @coll_ID,
+            @svar1);     
+            
+Select @svar1;
+
+
 -- event for å refreshe chores hver mandag
 
 
@@ -743,22 +887,5 @@ Select @svar1;
 
 -- event for å sette ny on duty
     -- hver mandag
-    -- 
-
--- add user to collective with the collective key
-
--- lage koblingstabell
-
--- slette member
-
--- gå over alle create/CRUD procedures og sørg for at det ikke ekstisterer
--- fra før av, altså kun 1 chore med samme tittel
-    -- en bruker med samme email
-    -- et collective med samme navn
-    -- 
-
-
-    -- FERDIG MED USER
-    -- FERDIG MED COLLECTIVE
     -- 
 
