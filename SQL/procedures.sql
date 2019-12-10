@@ -727,43 +727,6 @@ Select @svar1;
 -- ***************************************************************************** --
 
 
--- event for å refreshe chores hver mandag
-
-
--- set chore til å være ferdig
-    -- samme prosedyre må også telle ned først
-    -- om det er mer enn 0 "times_remaining" 
-    -- skal den dekrementere, hvis den er 0 sett status ferdig.
-
--- calculate overdues (event)
-    -- hver mandag sjekk om noen chores ikke er complete
-    -- insert into overdues
-        -- chore ID/title
-        -- userID/name
-
--- event for å sette ny on duty
-    -- hver mandag
-    -- 
-
--- add user to collective with the collective key
-
--- lage koblingstabell
-
--- slette member
-
--- gå over alle create/CRUD procedures og sørg for at det ikke ekstisterer
--- fra før av, altså kun 1 chore med samme tittel
-    -- en bruker med samme email
-    -- et collective med samme navn
-    -- 
-
-
-    -- FERDIG MED USER
-    -- FERDIG MED COLLECTIVE
-    -- 
-
-
-
 -- ************************************************* -- 
        -- PROCEDURE 10 ADD USER TO COLL --
 -- ************************************************* -- 
@@ -782,6 +745,7 @@ START TRANSACTION;
     SET @userExists = 0;
     SET @collExists = 0;
     SET @coll_ID_TEMP = 0;
+    SET @userInCollective = 0;
 
     SELECT Count(*) INTO @userExists
     FROM `User`
@@ -794,12 +758,20 @@ START TRANSACTION;
     SELECT Count(*) INTO @collExists
     FROM `Collective`
     WHERE `ID` = @coll_ID_TEMP; 
+    
+    SELECT Count(*) INTO @userInCollective
+    FROM `user_in_collective`
+    WHERE `user_ID` = p_user_ID
+    AND `collective_ID` = @coll_ID_TEMP; 
 
     IF (@userExists < 1) THEN
         SELECT CONCAT('User does not exist!') INTO p_message;
 
     ELSEIF (@collExists < 1) THEN
         SELECT CONCAT('Collective does not exist!') INTO p_message;
+    
+    ELSEIF (@userInCollective > 0) THEN
+        SELECT CONCAT('User already in collective.') INTO p_message;
     
     ELSE
         INSERT INTO `user_in_collective` (`user_ID`, `collective_ID`) VALUES
@@ -813,6 +785,7 @@ START TRANSACTION;
 COMMIT;
 END ::
 DELIMITER ;
+
 
 
 -- ************************************************* -- 
@@ -830,15 +803,16 @@ CALL add_user_coll(
 Select @svar1;
 
 
+
 -- ************************************************* -- 
        -- PROCEDURE 11 DELETE USER FROM COLL --
 -- ************************************************* -- 
 USE `CoClean`;
 DELIMITER ::
-DROP PROCEDURE IF EXISTS add_user_coll::
-CREATE PROCEDURE add_user_coll(
+DROP PROCEDURE IF EXISTS delete_user_coll::
+CREATE PROCEDURE delete_user_coll(
     IN p_user_ID INT(11),
-    IN p_coll_ID,
+    IN p_coll_ID INT(11),
     
     OUT p_message VARCHAR(150)
 )
@@ -850,18 +824,19 @@ START TRANSACTION;
     SET @userInCollective = 0;
 
     SELECT Count(*) INTO @userExists
-    FROM `user_in_collective`
-    WHERE `ID` = p_user_ID;
-
-    SELECT Count(*) INTO @userExists
     FROM `User`
     WHERE `ID` = p_user_ID;
 
     SELECT Count(*) INTO @collExists
-    FROM `Coll`
-    WHERE `ID` = @coll_ID_TEMP; 
+    FROM `Collective`
+    WHERE `ID` = p_coll_ID;
 
-    IF (@userExists@ < 1) THEN
+    SELECT Count(*) INTO @userInCollective
+    FROM `user_in_collective`
+    WHERE `user_ID` = p_user_ID
+    AND `collective_ID` = p_coll_ID; 
+
+    IF (@userExists < 1) THEN
         SELECT CONCAT('User does not exist!') INTO p_message;
 
     ELSEIF (@collExists < 1) THEN
@@ -873,6 +848,7 @@ START TRANSACTION;
         DELETE FROM `user_in_collective`
         WHERE `user_ID` = p_user_ID
         AND `collective_ID` = p_coll_ID;
+         SELECT CONCAT('User removed from collective.') INTO p_message;
     END IF;
   
 COMMIT;
@@ -884,11 +860,32 @@ DELIMITER ;
               -- PROCEDURE 11 TEST -- 
 -- ************************************************* -- 
 USE `CoClean`;
-SET @user_ID = 3;
-SET @coll_key = "";
+SET @user_ID = 2;
+SET @coll_ID = 2;
 
-CALL add_user_coll(
-            @ID,
+CALL delete_user_coll(
+            @user_ID,
+            @coll_ID,
             @svar1);     
             
 Select @svar1;
+
+
+-- event for å refreshe chores hver mandag
+
+
+-- set chore til å være ferdig
+    -- samme prosedyre må også telle ned først
+    -- om det er mer enn 0 "times_remaining" 
+    -- skal den dekrementere, hvis den er 0 sett status ferdig.
+
+-- calculate overdues (event)
+    -- hver mandag sjekk om noen chores ikke er complete
+    -- insert into overdues
+        -- chore ID/title
+        -- userID/name
+
+-- event for å sette ny on duty
+    -- hver mandag
+    -- 
+
