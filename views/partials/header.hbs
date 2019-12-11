@@ -51,7 +51,7 @@
         </ul>
     </div>
 </nav>
-
+{{!-- Signin modal --}}
 <div class="modal fade" id="modalSignIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -64,17 +64,44 @@
             <div class="modal-body mx-3">
                 <div class="md-form mb-5">
                     <i class="mdi mdi-account prefix grey-text"></i>
-                    <input type="text" id="collective" class="form-control validate" autocomplete="off">
-                    <label data-error="Required field" data-success="" for="collective">Username</label>
+                    <input type="text" id="username" class="form-control validate" autocomplete="off">
+                    <label data-error="Required field" data-success="" for="username">Username</label>
                 </div>
                 <div class="md-form mb-5">
                     <i class="mdi mdi-lock prefix grey-text"></i>
-                    <input type="password" id="collective" class="form-control validate" autocomplete="off">
-                    <label data-error="Required field" data-success="" for="password">Password</label>
+                    <input type="password" id="signinPassword" class="form-control validate" autocomplete="off">
+                    <label data-error="Required field" data-success="" for="signinPassword">Password</label>
+                </div>
+                <div class="text-center md-form mb-4">
+                    <p class="overdueRed" id="feedbkSignin"></p>
                 </div>
             </div>
             <div class="modal-footer d-flex justify-content-center">
                 <button class="btn btn-finish"><span class="lightFont signupFont">Sign In</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--User created-->
+<div class="modal fade" id="userCreationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Welcome</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+                <div class="text-center">
+                    <p id="creationSuccessMessage"></p>
+                </div>
+                <div class="text-center mt-4">
+                    <button type="button" class="btn btn-finish lightFont" data-dismiss="modal"><span
+                            class="lightFont signupFont">Ok</span></button>
+                </div>
             </div>
         </div>
     </div>

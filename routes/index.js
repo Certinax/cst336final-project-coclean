@@ -5,6 +5,8 @@ const testRouter = require("./test/test");
 const profileRouter = require("./profile");
 const collectiveRouter = require("./collective");
 const choreRouter = require("./chore");
+const signupRouter = require("./signup");
+const url = require("url");
 
 // Landing page.
 router.get("/", function(req, res, next) {
@@ -27,4 +29,5 @@ router.use("/test", testRouter);
 router.use("/profile", profileRouter);
 router.use("/collective", collectiveRouter);
 router.use("/chore", choreRouter);
+router.use("/signup", signupRouter);
 module.exports = router;
