@@ -871,8 +871,9 @@ CALL delete_user_coll(
 Select @svar1;
 
 
--- event for å refreshe chores hver mandag
 
+
+-- event for å refreshe chores hver mandag
 
 -- set chore til å være ferdig
     -- samme prosedyre må også telle ned først
@@ -888,4 +889,12 @@ Select @svar1;
 -- event for å sette ny on duty
     -- hver mandag
     -- 
+
+
+-- kanskje en event som kjøres hver mandag som gjør alt
+    -- kalkulere overdues
+    -- refresh chores
+    -- sette ny on duty
+
+    
 
