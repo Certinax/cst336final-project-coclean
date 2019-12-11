@@ -62,7 +62,7 @@
 </div>
 
 
-
+<!-- Sign Up Modal-->
 <div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -103,10 +103,13 @@
           <input type="password" id="re-password" class="form-control validate">
           <label data-error="" data-success="" for="re-password">Re-enter password</label>
         </div>
+          <div class="text-center md-form mb-4">
+              <p class="overdueRed" id="feedbkSignup"></p>
+          </div>
 
       </div>
       <div class="modal-footer d-flex justify-content-center">
-        <button class="btn btn-finish"><span class="lightFont signupFont">Sign Up</span></button>
+        <button id="signUpBtn" class="btn btn-finish"><span class="lightFont signupFont">Sign Up</span></button>
       </div>
     </div>
   </div>
