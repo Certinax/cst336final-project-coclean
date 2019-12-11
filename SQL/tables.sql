@@ -23,9 +23,11 @@ CREATE TABLE `Collective` (
 
   PRIMARY KEY (`ID`),
   FOREIGN KEY (`admin_user`) 
-        REFERENCES `User`(`ID`),
+        REFERENCES `User`(`ID`)
+        ON DELETE CASCADE,
   FOREIGN KEY (`onduty_user`) 
         REFERENCES `User`(`ID`)
+        ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
 
 
