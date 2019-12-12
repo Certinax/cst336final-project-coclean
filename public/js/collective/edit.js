@@ -1,10 +1,8 @@
 $(document).ready(() => {
   $("#createCollective").on("click", () => {
-    console.log("create from click");
     updateCollective();
   });
   $("#deleteCollective").on("click", () => {
-    console.log("delete from click");
     deleteCollective();
   });
 });
