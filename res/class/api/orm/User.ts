@@ -100,7 +100,6 @@ class User {
 	// * User login
 	public static login(email: string, password: string, callback: Function) {
 		const sql = 'SELECT * FROM `User` WHERE `email` = ?;';
-		const sql2 = 'SELECT COUNT(*) FROM `user_in_collective` WHERE `user_ID` = ?';
 		db.prep(sql, [email]).then((resolved: any) => {
 			callback(resolved);
 		}).catch((error: any) => {

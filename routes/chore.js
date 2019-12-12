@@ -5,7 +5,8 @@ router.get("/", function(req, res) {
   if (req.session.userId) {
     res.render("page/chore/home", {
       title: "Chores",
-      username: req.session.username
+      username: req.session.username,
+      userId: req.session.userId
     });
   } else {
     res.redirect("/");
