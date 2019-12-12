@@ -17,9 +17,12 @@ router.post("/", function(req, res) {
       password: req.body.password
     })
     .then(function(result) {
+      console.log(result.data);
       if (result.data.meta.success) {
         req.session.userId = result.data.result.ID;
         req.session.username = result.data.result.name;
+        req.session.isInCollective =
+          result.data.result.isInCollective === 1 ? true : false;
       }
       res.json(result.data.meta);
     })

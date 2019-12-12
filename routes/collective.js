@@ -2,7 +2,13 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", function(req, res) {
-  if (req.session.userId) {
+  if (req.session.userId && req.session.isInCollective) {
+    res.render("page/collective/home", {
+      collective: true,
+      title: "Collective",
+      username: req.session.username
+    });
+  } else if (req.session.userId && !req.session.isInCollective) {
     res.render("page/collective/select", {
       collective: true,
       title: "Collective",
