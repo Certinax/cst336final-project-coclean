@@ -21,10 +21,7 @@ CREATE EVENT update_onduty
         UPDATE `Chore` 
 		SET `times_completed` = 0,
 		`completed` = 0;
-
-
-		
-		           
+        
     END::
 DELIMITER ;
 
