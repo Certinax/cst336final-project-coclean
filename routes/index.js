@@ -11,6 +11,7 @@ const url = require("url");
 
 // Landing page.
 router.get("/", function(req, res, next) {
+  console.log(req.session);
   if (req.session.userId) {
     res.render("index", {
       home: true,
