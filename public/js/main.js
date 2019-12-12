@@ -17,6 +17,8 @@ $(document).ready(() => {
       login();
     }
   });
+
+  $("#myTable").DataTable();
 });
 
 function clearSigninModal() {
