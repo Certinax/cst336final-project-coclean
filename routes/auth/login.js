@@ -17,7 +17,6 @@ router.post("/", function(req, res) {
       password: req.body.password
     })
     .then(function(result) {
-      console.log(result.data);
       if (result.data.meta.success) {
         req.session.userId = result.data.result.ID;
         req.session.username = result.data.result.name;
