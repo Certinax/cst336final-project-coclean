@@ -232,11 +232,16 @@ BEGIN
 START TRANSACTION;   
     SET @userExists = 0;
     SET @collectiveExists = 0;
+    SET @userInAnotherCollective = 0;
     
 
     SELECT Count(*) INTO @userExists
     FROM `User`
     WHERE `ID` = p_ID;
+
+    SELECT Count(*) INTO @userInAnotherCollective
+    FROM `user_in_collective`
+    WHERE `user_ID` = p_ID;
 
     SELECT Count(*) INTO @collectiveExists
     FROM `Collective`
@@ -249,6 +254,9 @@ START TRANSACTION;
     ELSEIF @collectiveExists > 0 THEN
             SELECT CONCAT('Name already taken.') INTO p_message;
     
+    ELSEIF @userInAnotherCollective > 0 THEN
+            SELECT CONCAT('User already in collective.') INTO p_message;
+
     ELSEIF (p_name = '') THEN
             SELECT CONCAT('Name required.') INTO p_message;
     
@@ -261,6 +269,9 @@ START TRANSACTION;
             p_ID,
             p_ID
         );
+
+        INSERT INTO `user_in_collective` (`user_ID`, `collective_ID`) VALUES
+            (p_ID, (SELECT MAX(`ID`) FROM `Collective`));
              
         SELECT CONCAT('Collective created!') INTO p_message;
     END IF;
@@ -665,7 +676,7 @@ START TRANSACTION;
         DELETE FROM `user_in_collective`
         WHERE `user_ID` = p_user_ID
         AND `collective_ID` = p_coll_ID;
-         SELECT CONCAT('User removed from collective.') INTO p_message;
+        SELECT CONCAT('User removed from collective.') INTO p_message;
     END IF;
   
 COMMIT;
@@ -756,7 +767,7 @@ DELIMITER ::
 DROP PROCEDURE IF EXISTS calc_overdues::
 CREATE PROCEDURE calc_overdues(
     
-    OUT p_message INT(2)
+    OUT p_message VARCHAR(60)
 
 )
 
@@ -795,7 +806,7 @@ BEGIN
             INSERT INTO
                 `Overdue`
             VALUES
-                (onduty_ID, chore_ID, coll_ID);
+                (onduty_ID, chore_ID, coll_ID, NOW());
         
         END LOOP;
 
@@ -829,7 +840,9 @@ BEGIN
     
     SELECT
     CASE 
+       
         WHEN C.`onduty_user` = MAX(UIC.`user_ID`) THEN MIN(UIC.`user_ID`)
+        WHEN COUNT(UIC.`user_ID`) < 2 THEN C.`onduty_user`
         ELSE
             (SELECT `user_ID`
             FROM `user_in_collective`AS UIC2, `Collective` AS C2
