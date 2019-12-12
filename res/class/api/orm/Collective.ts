@@ -46,7 +46,7 @@ class Collective {
 
 	// * Create collective
 	public static create(name: string, description: string, school: string, userId: number, callback: Function) {
-		const sql = `CALL new_collective(${name}, "${description}", "${school}", "${userId}", @out); SELECT @out;`;
+		const sql = `CALL new_collective("${name}", "${description}", "${school}", ${userId}, @out); SELECT @out;`;
 		db.query(sql).then((resolved: any) => {
 			callback(resolved);
 		}).catch((error: any) => {

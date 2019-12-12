@@ -93,4 +93,11 @@ choreRouter.delete('/:id', (req, res, next) => {
 });
 
 
+choreRouter.get('/:id/increment', (req,res,next) => {
+	chore.increment(req.params.id, (result) => {
+		res.json(result);
+	});
+});
+
+
 module.exports = choreRouter;
