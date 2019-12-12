@@ -335,9 +335,10 @@ export const Http = {
 	request: function (method, url, requestBody, callback) {
 		const xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = function () {
-			if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200)
+			if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
 				console.log("HTTP " + method.toUpperCase() + " response was received.");
-			callback(xhr.responseText);
+				callback(xhr.responseText);
+			}
 		};
 		console.log("HTTP " + method.toUpperCase() + " request was sent.");
 		xhr.open(method, url, true);
