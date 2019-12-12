@@ -45,8 +45,8 @@ class Collective {
 	}
 
 	// * Create collective
-	public static create(name: string, email: string, callback: Function) {
-		const sql = `CALL new_collective("${name}", "${email}", @out); SELECT @out;`;
+	public static create(name: string, description: string, school: string, userId: number, callback: Function) {
+		const sql = `CALL new_collective(${name}, "${description}", "${school}", "${userId}", @out); SELECT @out;`;
 		db.query(sql).then((resolved: any) => {
 			callback(resolved);
 		}).catch((error: any) => {
@@ -56,8 +56,8 @@ class Collective {
 
 
 	// * Edit Collective
-	public static edit(name: string, email: string, password: string, callback: Function) {
-		const sql = `CALL edit_collective("${name}", "${email}", "${password}", @out); SELECT @out`;
+	public static edit(id: number, name: string, description: string, school: string, callback: Function) {
+		const sql = `CALL edit_collective(${id}, "${name}", "${description}", "${school}", @out); SELECT @out`;
 		db.query(sql).then((resolved: any) => {
 			callback(resolved);
 		}).catch((error: any) => {
@@ -67,8 +67,8 @@ class Collective {
 
 
 	// * Delete Collective
-	public static delete(email: string, password: string, name: string, callback: Function) {
-		const sql = `CALL delete_collective("${email}", "${password}", "${name}", @out); SELECT @out`;
+	public static delete(id: number, callback: Function) {
+		const sql = `CALL delete_collective(${id}, @out); SELECT @out`;
 		db.query(sql).then((resolved: any) => {
 			callback(resolved);
 		}).catch((error: any) => {

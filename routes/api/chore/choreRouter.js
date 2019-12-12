@@ -38,8 +38,8 @@ choreRouter.get('/:id', (req, res, next) => {
 
 // * Create chore.
 choreRouter.post('/', (req, res, next) => {
-	const {collectionName, title, description, startDate, frequency} = req.body;
-	chore.create(collectionName, title, description, startDate, frequency, (result) => {
+	const {collectiveId, title, description, frequency} = req.body;
+	chore.create(collectiveId, title, description, frequency, (result) => {
 		if (Array.isArray(result) && result.length > 0) {
 			res.json(
 				new responseBody(
@@ -57,16 +57,17 @@ choreRouter.post('/', (req, res, next) => {
 
 
 // * Update Chore.
-choreRouter.put('/', (req, res, next) => {
-	const {collectionName, title, description, frequency} = req.body;
-	chore.edit(collectionName, title, description, frequency, (result) => {
+choreRouter.put('/:id', (req, res, next) => {
+	const choreId = req.params.id;
+	const {title, description, frequency} = req.body;
+	chore.edit(choreId, title, description, frequency, (result) => {
 		if (Array.isArray(result) && result.length > 0) {
 			res.json(new responseBody(
 				'chore',
 				crudOperation.UPDATE,
 				result[1][0]["@out"] === 'Chore updated!',
-				`Chore (${title}) was successfully created`,
-				`Chore (${title}) could not be created.`,
+				`Chore (${title}) was successfully updated`,
+				`Chore (${title}) could not be updated.`,
 				result
 			));
 		} else res.json(result);
@@ -75,16 +76,16 @@ choreRouter.put('/', (req, res, next) => {
 
 
 // * Delete Chore.
-choreRouter.delete('/', (req, res, next) => {
-	const {collectiveName, title, password} = req.body;
-	chore.delete(collectiveName, title, password, (result) => {
+choreRouter.delete('/:id', (req, res, next) => {
+	const choreId = req.params.id;
+	chore.delete(choreId, (result) => {
 		if (Array.isArray(result) && result.length > 0) {
 			res.json(new responseBody(
 				'chore',
 				crudOperation.DELETE,
 				result[1][0]["@out"] === 'Chore deleted!',
-				`Chore (${title}) was successfully deleted`,
-				`Chore (${title}) could not be deleted.`,
+				`Chore (id: ${choreId}) was successfully deleted`,
+				`Chore (id: ${choreId}) could not be deleted.`,
 				result
 			));
 		} else res.json(result);

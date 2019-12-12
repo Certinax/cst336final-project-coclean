@@ -24,17 +24,17 @@ userApi.get('/', (req, res, next) => {
 
 
 // * Get Specific User.
-userApi.get('/:email', (req, res, next) => {
-	const {email} = req.params;
-	user.fetch(email, (result) => {
+userApi.get('/:id', (req, res, next) => {
+	const {id} = req.params;
+	user.fetch(id, (result) => {
 		if (!result) res.json([]);
 		res.json(
 			new responseBody(
 				'user',
 				crudOperation.READ,
 				Array.isArray(result) && result.length > 0,
-				`User (${email}) was successfully fetched`,
-				`User (${email}) was not found.`,
+				`User (id: ${id}) was successfully fetched`,
+				`User (id: ${id}) was not found.`,
 				result
 			)
 		);
@@ -64,16 +64,16 @@ userApi.post('/', (req, res, next) => {
 
 
 // * Update User.
-userApi.put('/:email', (req, res, next) => {
-	const {email} = req.params;
-	const {name, surname, newPassword} = req.body;
-	user.edit({name,surname,email,newPassword}, (result) => {
+userApi.put('/:id', (req, res, next) => {
+	const {id} = req.params;
+	const {name, surname, email, oldPassword, newPassword} = req.body;
+	user.edit({id,name,surname,email,oldPassword,newPassword}, (result) => {
 		res.json(new responseBody(
 			'user',
 			crudOperation.UPDATE,
 			result[1][0]["@out"] === 'User updated!',
-			`User (${email}) was successfully updated!`,
-			`User (${email}) was not updated!`,
+			`User (id: ${id}) was successfully updated!`,
+			`User (id: ${id}) was not updated!`,
 			result
 		));
 	});
@@ -81,16 +81,16 @@ userApi.put('/:email', (req, res, next) => {
 
 
 // * Delete User.
-userApi.delete('/:email', (req, res, next) => {
-	const email = req.params.email;
-	const password = mysql.SHA256(req.body.password);
-	user.delete({email,password}, (result) => {
+userApi.delete('/:id', (req, res, next) => {
+	const id = req.params.id;
+	const password = req.body.password;
+	user.delete(id, password, (result) => {
 		res.json(new responseBody(
 			'user',
 			crudOperation.DELETE,
 			result[1][0]["@out"] === 'User deleted!',
-			`User (${email}) was successfully deleted!`,
-			`Incorrect credentials for user (${email})`,
+			`User (id: ${id}) was successfully deleted!`,
+			`Incorrect credentials for user (id: ${id})`,
 			result
 		));
 	});
@@ -98,27 +98,27 @@ userApi.delete('/:email', (req, res, next) => {
 
 
 // * User Login.
-userApi.post('/login/:email', (req, res, next) => {
-	user.login({email: req.params.email, password: req.body.password}, (result) => {
-		const email = req.params.email;
-		const password = mysql.SHA256(req.body.password);
-		if (result === false || password !== result[0].password) {
+userApi.post('/login/', (req, res, next) => {
+	user.login({email: req.body.email, password: req.body.password}, (result) => {
+		if (Array.isArray(result) && result.length > 0) {
+			const trialPassword = mysql.SHA256(req.body.password);
+			const existingPassword = result[0]['password'];
 			res.json(new responseBody(
 				'user',
 				crudOperation.READ,
-				false,
-				'',
-				`User (${email}) entered wrong login credentials.`,
-				false
+				(trialPassword === existingPassword),
+				`User (${req.body.email}) successfully entered correct login credentials.`,
+				`User (${req.body.email}) entered the wrong login credentials.`,
+				(trialPassword === existingPassword) ? result[0] : []
 			));
 		} else {
 			res.json(new responseBody(
 				'user',
 				crudOperation.READ,
-				(password === result[0].password),
-				`User (${email}) successfully logged in.`,
-				`User (${email}) entered the wrong login credentials.`,
-				result,
+				false,
+				'',
+				`User (${req.body.email}) does not exist.`,
+				[]
 			));
 		}
 	});
