@@ -67,27 +67,6 @@ COMMIT;
 END ::
 DELIMITER ;
 
--- ************************************************* -- 
-        -- PROCEDURE 1 NEW USER - TEST CALL -- 
--- ************************************************* -- 
-USE `CoClean`;
-SET @fname = 'Tester';
-SET @sname= 'Testersen';
-SET @email='test@test.com';
-SET @upassword = 'test123321';
-
-CALL new_user(
-            @fname, 
-            @sname,
-            @email, 
-            @upassword,
-            @svar1);
-            
-Select @svar1;
-
--- SELECT * FROM `User`;
--- SELECT * FROM `Collective`;
-
 
 
 -- ************************************************* -- 
@@ -169,28 +148,7 @@ END ::
 DELIMITER ;
 
 
--- ************************************************* -- 
-        -- PROCEDURE 2 EDIT USER TEST CALL -- 
--- ************************************************* -- 
-USE `CoClean`;
-SET @p_ID = 7;
-SET @p_fname = 'BarexxTest';
-SET @p_sname= 'BarexxTest';
-SET @p_email='BareTxxest@test.com';
-SET @p_new_upassword = 'test123321';
-SET @p_old_upassword = 'lol123321';
 
-CALL edit_user(
-            @p_ID,
-            @p_fname,
-            @p_sname,
-            @p_email, 
-            @p_old_upassword,
-            @p_new_upassword,
-            @svar1);
-            
-         
-Select @svar1;
 
 
 -- ************************************************* -- 
@@ -236,24 +194,6 @@ END ::
 DELIMITER ;
 
 
--- ************************************************* -- 
-        -- PROCEDURE 3 DELETE USER TEST CALL -- 
--- ************************************************* -- 
-USE `CoClean`;
-
-SET @ID= 5;
-SET @upassword = 'd';
-
-
-CALL delete_user(
-            @ID, 
-            @upassword,
-            @svar1);     
-            
-Select @svar1;
-
--- SELECT * FROM `User`;
--- SELECT * FROM `Collective`;
 
 
 -- ***************************************************************************** --
@@ -329,27 +269,6 @@ COMMIT;
 END ::
 DELIMITER ;
 
--- ************************************************* -- 
-                -- PROCEDURE 4 TEST CALL -- 
--- ************************************************* -- 
-USE `CoClean`;
-SET @p_name = 'Napa2014';
-SET @p_desc = 'fy faen og kaoooos shallabais';
-SET @p_ID = 1;
-SET @p_school = 'Livets Skole';
-
-
-CALL new_collective(
-            @p_name,
-            @p_desc,
-            @p_school,
-            @p_ID,
-            @svar1);
-            
-Select @svar1;
--- SELECT * FROM `User`;
--- SELECT * FROM `Collective`;
-
 
 -- ************************************************* -- 
             -- PROCEDURE 5 CRUD Collective -- 
@@ -404,27 +323,7 @@ COMMIT;
 END ::
 DELIMITER ;
 
--- ************************************************* -- 
-            -- PROCEDURE 5 EDIT COLLECTIVE TEST CALL -- 
--- ************************************************* -- 
-USE `CoClean`;
-SET @ID = 1;
-SET @name='asd';
-SET @desc = 'asd';
-SET @school = 'asd';
 
-CALL edit_collective(
-            @ID,
-            @name, 
-            @desc,
-            @School,
-            @svar1);
-            
-            
-Select @svar1;
-
--- SELECT * FROM `User`;
--- SELECT * FROM `Collective`;
 
 
 
@@ -464,23 +363,6 @@ END ::
 DELIMITER ;
 
 
--- ************************************************* -- 
-        -- PROCEDURE 6 DELETE COLLETIVE TEST CALL -- 
--- ************************************************* -- 
-USE `CoClean`;
-SET @ID= 1;
-
-
-CALL delete_collective(
-            @ID,
-            @svar1);     
-            
-Select @svar1;
-
--- SELECT * FROM `User`;
--- SELECT * FROM `Collective`;
-
-
 
 
 
@@ -505,6 +387,7 @@ Select @svar1;
 -- ************************************************* -- 
          -- PROCEDURE 7 NEW CHORE-- 
 -- ************************************************* -- 
+
 USE `CoClean`;
 DELIMITER ::
 DROP PROCEDURE IF EXISTS new_chore::
@@ -534,47 +417,26 @@ START TRANSACTION;
             SELECT CONCAT('Title required.') INTO p_message;
     
     ELSEIF (p_frequency > 0) THEN
-            SET @defaultFreq = p_freq;
-           
-
-    ELSE
-        INSERT INTO `Chore` (`title`, `description`, `collective_ID`, `status`, `frequency`)  VALUES 
-            (p_title, 
-             p_desc,
-             p_coll_ID,
-             0,
-             @defaultFreq
-            
-        );
+            SET @defaultFreq = p_frequency;
+        
+            INSERT INTO `Chore` (`title`, `description`, `collective_ID`, `completed`, `frequency`, `times_completed`)  VALUES 
+                (p_title, 
+                 p_desc,
+                 p_coll_ID,
+                 0,
+                 @defaultFreq,
+                 0
+                
+            );
              
-        SELECT CONCAT('Chore created!') INTO p_message;
+            SELECT CONCAT('Chore created!') INTO p_message;
     END IF;
             
 COMMIT;
 END ::
 DELIMITER ;
 
--- ************************************************* -- 
-                -- PROCEDURE 7 TEST CALL -- 
--- ************************************************* -- 
-USE `CoClean`;
-SET @collID = 2;
-SET @title = "Støascccdasdvsuge";
-SET @desc = "TEST BRESxxx2222xxKRIVELSE";
-SET @freq = -1;
 
-CALL new_chore(
-            @collID,
-            @title,
-            @desc,
-            @freq,
-            @svar1);
-            
-Select @svar1;
-
--- SELECT * FROM `User`;
--- SELECT * FROM `Collective`;
--- SELECT * FROM `Chore`;
 
 
 
@@ -627,33 +489,12 @@ START TRANSACTION;
         SELECT CONCAT('Chore updated!') INTO p_message;
     END IF;
     
-    
-    
-    
-    
+
 
 COMMIT;
 END ::
 DELIMITER ;
 
--- ************************************************* -- 
-                -- PROCEDURE 8 TEST CALL -- 
--- ************************************************* -- 
-
-USE `CoClean`;
-SET @ID = 3;
-SET @title = 'KUKsuge';
-SET @desc = 'NY BESKsdasdasdasdasdRIVELSE MAFAKKA';
-SET @freq = 10;
-
-CALL edit_chore(
-            @ID,
-            @title, 
-            @desc,
-            @freq,
-            @svar1);
-            
-Select @svar1;
 
 
 -- SELECT * FROM `User`;
@@ -692,25 +533,6 @@ START TRANSACTION;
 COMMIT;
 END ::
 DELIMITER ;
-
-
--- ************************************************* -- 
-        -- PROCEDURE 9 DELETE CHORE TEST CALL -- 
--- ************************************************* -- 
-USE `CoClean`;
-SET @ID = 3;
-
-CALL delete_chore(
-            @ID,
-            @svar1);     
-            
-Select @svar1;
-
-
--- SELECT * FROM `User`;
--- SELECT * FROM `Collective`;
--- SELECT * FROM `Chore`;
-
 
 -- ***************************************************************************** --
 -- ***************************************************************************** --
@@ -788,19 +610,6 @@ DELIMITER ;
 
 
 
--- ************************************************* -- 
-        -- PROCEDURE 10 DELETE CHORE TEST CALL -- 
--- ************************************************* -- 
-USE `CoClean`;
-SET @user_ID = 1;
-SET @coll_key = '804040170501dccb8479fcb835e1da1956870655';
-
-CALL add_user_coll(
-            @user_ID,
-            @coll_key,
-            @svar1);     
-            
-Select @svar1;
 
 
 
@@ -856,45 +665,180 @@ END ::
 DELIMITER ;
 
 
+
+
+
 -- ************************************************* -- 
-              -- PROCEDURE 11 TEST -- 
+        -- PROCEDURE 12 INCREMENT CHORE -- 
 -- ************************************************* -- 
+
 USE `CoClean`;
-SET @user_ID = 2;
-SET @coll_ID = 2;
+DELIMITER ::
+DROP PROCEDURE IF EXISTS increment_chore::
+CREATE PROCEDURE increment_chore(
+    IN p_chore_ID INT(11),
+    
+    OUT p_message INT(2)
 
-CALL delete_user_coll(
-            @user_ID,
-            @coll_ID,
-            @svar1);     
+)
+
+BEGIN
+START TRANSACTION;
+    SET @choreExists = 0;
+    SET @timesCompleted = 0;
+    SET @frequency = 0;
+    SET @alreadyCompleted = 0;
+
+    SELECT Count(*) INTO @choreExists
+    FROM `Chore`
+    WHERE `ID` = p_chore_ID; 
+    
+    SELECT `completed` INTO @alreadyCompleted
+    FROM `Chore`
+    WHERE `ID` = p_chore_ID; 
+    
+    SELECT `times_completed` INTO @timesCompleted
+    FROM `Chore`
+    WHERE `ID` = p_chore_ID; 
+    
+    SELECT `frequency` INTO @frequency
+    FROM `Chore`
+    WHERE `ID` = p_chore_ID; 
+    
+   
+    IF (@choreExists < 1) THEN
+            SELECT 0 INTO p_message;
+
+    ELSEIF (@alreadyCompleted > 0) THEN
+            SELECT 0 INTO p_message;
+    
+    ELSEIF (@timesCompleted = @frequency-1) THEN
+            UPDATE `Chore`
+        SET
+            `times_completed` = `times_completed`+1,
+            `completed` = 1
+        WHERE `ID` = p_chore_ID;
+        
+        SELECT 1 INTO p_message;
             
-Select @svar1;
+    ELSE
+        UPDATE `Chore`
+        SET
+            `times_completed` = `times_completed`+1
+        WHERE `ID` = p_chore_ID;
+        
+        SELECT 1 INTO p_message;
+    END IF;
+    
+
+
+COMMIT;
+END ::
+DELIMITER ;
 
 
 
 
--- event for å refreshe chores hver mandag
+-- ************************************************* -- 
+                -- PROCEDURE 13 CALC OVERDUES -- 
+-- ************************************************* -- 
 
--- set chore til å være ferdig
-    -- samme prosedyre må også telle ned først
-    -- om det er mer enn 0 "times_remaining" 
-    -- skal den dekrementere, hvis den er 0 sett status ferdig.
+USE `CoClean`;
+DELIMITER ::
+DROP PROCEDURE IF EXISTS calc_overdues::
+CREATE PROCEDURE calc_overdues(
+    
+    OUT p_message INT(2)
 
--- calculate overdues (event)
-    -- hver mandag sjekk om noen chores ikke er complete
-    -- insert into overdues
-        -- chore ID/title
-        -- userID/name
+)
 
--- event for å sette ny on duty
-    -- hver mandag
-    -- 
+BEGIN
+
+    DECLARE chore_ID INT;
+    DECLARE coll_ID INT;
+    DECLARE onduty_ID INT;
+    DECLARE done INT DEFAULT FALSE;
+
+    DECLARE the_cursor CURSOR FOR
+        SELECT
+            C.`ID`,
+            C.`collective_ID`,
+            COL.`onduty_user`
+        FROM
+            `Chore` AS C, `Collective` AS COL
+        WHERE
+            C.`completed` = 0
+            AND C.`collective_ID` = COL.`ID`;
+            
+            
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+    -- OPEN CURSOR
+    OPEN the_cursor;
+
+        the_loop: LOOP
+        
+            FETCH the_cursor INTO chore_ID, coll_ID, onduty_ID;
+            
+            IF done THEN
+                LEAVE the_loop;
+            END IF;
+            
+            INSERT INTO
+                `Overdue`
+            VALUES
+                (onduty_ID, chore_ID, coll_ID);
+        
+        END LOOP;
+
+    -- CLOSE CURSOR
+    CLOSE the_cursor;
+
+    SET p_message = "Overdues created";
+   
+END ::
+DELIMITER ;
 
 
--- kanskje en event som kjøres hver mandag som gjør alt
-    -- kalkulere overdues
-    -- refresh chores
-    -- sette ny on duty
+
+
+-- ************************************************* -- 
+              -- FUNCTION 1 FIND NEXT ONDUTY  -- 
+-- ************************************************* -- 
+
+USE `CoClean`;
+DELIMITER ::
+DROP FUNCTION IF EXISTS find_next::
+CREATE FUNCTION find_next(
+    p_coll_ID   INT(11)
+
+)
+RETURNS INT(5)
+READS SQL DATA
+
+BEGIN
+    DECLARE result INT(5);
+    
+    SELECT
+    CASE 
+        WHEN C.`onduty_user` = MAX(UIC.`user_ID`) THEN MIN(UIC.`user_ID`)
+        ELSE
+            (SELECT `user_ID`
+            FROM `user_in_collective`AS UIC2, `Collective` AS C2
+            WHERE UIC2.`user_ID` > C2.`onduty_user`
+            AND `collective_ID` = p_coll_ID
+            AND UIC2.`collective_ID` = C2.`ID`
+            LIMIT 1)
+    END INTO result
+    FROM `user_in_collective`AS UIC, `Collective` AS C
+    WHERE UIC.`collective_ID` = p_coll_ID
+    AND UIC.`collective_ID` = C.`ID`;
+
+    RETURN result;
+    
+END ::
+DELIMITER ;
+
 
 
 

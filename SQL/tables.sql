@@ -37,9 +37,9 @@ CREATE TABLE `Chore` (
   `title` varchar(45) NOT NULL,
   `description` TINYTEXT,
   `collective_ID` int(11) NOT NULL,
-  `status` boolean NOT NULL,
+  `completed` boolean NOT NULL,
   `frequency` int(11),
-  `times_remaining` int(11),
+  `times_completed` int(11),
   PRIMARY KEY (`ID`),
   FOREIGN KEY (`collective_ID`) 
         REFERENCES `Collective`(`ID`)
