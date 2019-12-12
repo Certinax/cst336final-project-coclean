@@ -16,7 +16,6 @@ router.get("/", function(req, res, next) {
       home: true,
       title: "CoClean",
       message: "We are overqualified.",
-
       username: req.session.username
     });
   } else {

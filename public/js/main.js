@@ -46,3 +46,7 @@ function login() {
     }
   });
 }
+
+function logout() {
+  console.log("log out");
+}
