@@ -62,7 +62,11 @@
                 </datalist>
             </div>
         </div>
+        <div class="text-center">
+            <p id="profileFeedback"></p>
+        </div>
     </form>
+
 
     <div class="mt-5 text-center">
         <button class="btn btn-finish" data-toggle="modal" data-target="#updateModal"><span
@@ -90,7 +94,20 @@
             <div class="modal-body mx-3">
                 <div class="text-center">
                     <h5>You will not be able to recover your profile or log in if you confirm</h5>
-                    <p id="deletedAuthorId"></p>
+                </div>
+                <div class="modal-body mx-3">
+                    <div class="form-row justify-content-center">
+                        <div class="form-group col-md-6">
+                            <div class="d-flex justify-content-start">
+                                <label for="deleteProfileInput">Enter password</label>
+                            </div>
+                            <input type="text" class="form-control" id="deleteProfileInput"
+                                   placeholder="Enter your password">
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <p class="overdueRed" id="deleteFeedback"></p>
                 </div>
                 <div class="text-center mt-4">
                     <button type="button" class="btn btn-finish lightFont" id="deleteProfile">Confirm</button>
@@ -128,6 +145,9 @@
                                placeholder="Enter your password">
                     </div>
                 </div>
+            </div>
+            <div class="text-center">
+                <p class="overdueRed" id="updateFeedback"></p>
             </div>
             <div class="text-center mt-4">
                 <button type="button" class="btn btn-finish lightFont" id="updateProfile">Confirm</button>

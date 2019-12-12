@@ -18,7 +18,7 @@ router.get("/", function(req, res) {
     host: req.get("host")
   });
 
-  const apiURL = `${requrl}/api/user/ikh@gmail.com`;
+  const apiURL = `${requrl}/api/user/${req.session.userId}`;
 
   axios
       .get(apiURL)
@@ -43,31 +43,68 @@ router.get("/", function(req, res) {
       });
 });
 
+//Delete User
+router.delete("/delete", function(req, res) {
 
-function populateProfileFields(userID){
-    $.ajax({
-        url: `/api/user/${userID}`,
-        method: "GET",
-        dataType:  "json",
-        contentType: "application/json",
-        success: function (result) {
-            const {
-                name,
-                surname,
-                email,
-                school
-            } = result.result[0];
-
-            $("#profileFirstName").val(name);
-            $("#profileLastName").val(surname);
-            $("#profileEmail").val(email);
-            $("#profileSchool").val(school);
-        }
-
+    const requrl = url.format({
+        protocol: req.protocol,
+        host: req.get("host")
     });
-}
+
+    const apiURL = `${requrl}/api/user/${req.session.userId}`;
+
+    axios
+        .delete(apiURL, {data: {
+            password: req.body.password
+        }})
+        .then(function(result) {
+
+            if(result.data.meta.success) {
+                req.session.destroy();
+                res.json(result.data);
+            } else {
+                res.json(result.data);
+            }
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+});
 
 
+//Delete User
+router.put("/update", function(req, res) {
+
+    const requrl = url.format({
+        protocol: req.protocol,
+        host: req.get("host")
+    });
+
+    const apiURL = `${requrl}/api/user/${req.session.userId}`;
+    console.log(apiURL);
+
+    axios
+        .put(apiURL, {data: {
+                name: $("#profileFirstName"),
+                surname: $("#profileLastName"),
+                email: $("#profileEmail"),
+                newPassword: req.body.password,
+                oldPassword: req.body.password,
+            }})
+        .then(function(result) {
+            console.log("heihei");
+
+            if(result.data.meta.success) {
+                req.session.destroy();
+                res.json(result.data);
+            } else {
+                res.json(result.data);
+            }
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+});
 
 
 module.exports = router;
