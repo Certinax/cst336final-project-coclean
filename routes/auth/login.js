@@ -20,8 +20,9 @@ router.post("/", function(req, res) {
       if (result.data.meta.success) {
         req.session.userId = result.data.result.ID;
         req.session.username = result.data.result.name;
-        req.session.isInCollective =
-          result.data.result.isInCollective === 1 ? true : false;
+        req.session.isInCollective = result.data.result.isInCollective;
+        req.session.collectiveId = result.data.result.collectiveId;
+        req.session.collectiveAdminId = result.data.result.collectiveAdminId;
       }
       res.json(result.data.meta);
     })
@@ -29,4 +30,5 @@ router.post("/", function(req, res) {
       console.log(error);
     });
 });
+
 module.exports = router;

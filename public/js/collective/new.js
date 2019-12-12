@@ -1,6 +1,4 @@
 $(document).ready(() => {
-  console.log("Loaded...");
-
   $("#createCollective").on("click", () => {
     console.log("create from click");
     createCollective();
