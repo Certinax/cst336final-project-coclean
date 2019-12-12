@@ -80,14 +80,13 @@ router.put("/update", function(req, res) {
 
   axios
     .put(apiURL, {
-        name: req.body.name,
-        surname: req.body.surname,
-        email: req.body.email,
-        newPassword: req.body.newPassword,
-        oldPassword: req.body.oldPassword
+      name: req.body.name,
+      surname: req.body.surname,
+      email: req.body.email,
+      newPassword: req.body.newPassword,
+      oldPassword: req.body.oldPassword
     })
     .then(function(result) {
-
       if (result.data.meta.success) {
         res.json(result.data);
       } else {
