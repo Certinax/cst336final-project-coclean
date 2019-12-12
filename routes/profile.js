@@ -90,10 +90,7 @@ router.put("/update", function(req, res) {
       }
     })
     .then(function(result) {
-      console.log("heihei");
-
       if (result.data.meta.success) {
-        req.session.destroy();
         res.json(result.data);
       } else {
         res.json(result.data);
