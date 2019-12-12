@@ -2,16 +2,13 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", function(req, res) {
-  if (req.loggedIn) {
+  if (req.session.userId) {
     res.render("page/collective/select", {
       collective: true,
       title: "Collective"
     });
   } else {
-    res.render("page/collective/home", {
-      collective: true,
-      title: "Collective" // TODO: Collectivename should be retreived from database
-    });
+    res.redirect("/");
   }
 });
 
