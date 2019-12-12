@@ -631,6 +631,7 @@ START TRANSACTION;
     SET @userExists = 0;
     SET @collExists = 0;
     SET @userInCollective = 0;
+    SET @adminID = 0;
 
     SELECT Count(*) INTO @userExists
     FROM `User`
@@ -645,7 +646,14 @@ START TRANSACTION;
     WHERE `user_ID` = p_user_ID
     AND `collective_ID` = p_coll_ID; 
 
-    IF (@userExists < 1) THEN
+    SELECT `admin_user` INTO @adminID
+    FROM `Collective` 
+    WHERE `ID` = p_COLL_ID;
+
+    IF(p_user_ID = @adminID) THEN
+        SELECT CONCAT('Admin cannot leave collective, you must delete it.') INTO p_message;
+
+    ELSEIF (@userExists < 1) THEN
         SELECT CONCAT('User does not exist!') INTO p_message;
 
     ELSEIF (@collExists < 1) THEN

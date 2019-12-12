@@ -4,14 +4,6 @@ const axios = require("axios");
 const url = require("url");
 
 
-/*router.get("/", function(req, res) {
-  res.render("profile", {
-    profile: true,
-    title: "User Profile",
-    username: "Christina"
-  });
-});*/
-
 router.get("/", function(req, res) {
   const requrl = url.format({
     protocol: req.protocol,
@@ -41,6 +33,18 @@ router.get("/", function(req, res) {
       .catch(function(error) {
         console.log(error);
       });
+
+router.get("/", function(req, res) {
+  if (req.session.userId) {
+    res.render("profile", {
+      profile: true,
+      title: "User Profile",
+      username: req.session.username
+    });
+  } else {
+    res.redirect("/");
+  }
+
 });
 
 //Delete User

@@ -1,5 +1,6 @@
 $(document).ready(() => {
 
+
     $("#deleteProfile").on("click", function () {
         deleteUser();
     });
@@ -7,8 +8,15 @@ $(document).ready(() => {
     $("#updateProfile").on("click", function () {
         updateUser();
     });
-});
 
+function populateProfileFields(userID) {
+  $.ajax({
+    url: `/api/user/${userID}`,
+    method: "GET",
+    dataType: "json",
+    contentType: "application/json",
+    success: function(result) {
+      const { name, surname, email, school } = result.result[0];
 
 
 function deleteUser() {
@@ -51,3 +59,4 @@ function updateUser() {
         }
     });
 }
+
