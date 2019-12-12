@@ -36,8 +36,11 @@ router.get("/new", function(req, res) {
 });
 
 router.get("/edit", function(req, res) {
-  console.log("EDIT GET: ", req.session);
-  if (req.session.userId && req.session.isInCollective) {
+  if (
+    req.session.userId &&
+    req.session.isInCollective &&
+    req.session.userId === req.session.collectiveAdminId
+  ) {
     const requrl = url.format({
       protocol: req.protocol,
       host: req.get("host")
@@ -104,7 +107,6 @@ router.post("/create", function(req, res) {
 
 router.put("/edit", function(req, res) {
   if (req.session.userId) {
-    console.log(req.body);
     const requrl = url.format({
       protocol: req.protocol,
       host: req.get("host")
@@ -133,7 +135,6 @@ router.put("/edit", function(req, res) {
 
 router.delete("/delete", function(req, res) {
   if (req.session.userId && req.session.collectiveId) {
-    console.log(req.body);
     const requrl = url.format({
       protocol: req.protocol,
       host: req.get("host")
@@ -146,6 +147,32 @@ router.delete("/delete", function(req, res) {
       .then(function(result) {
         if (result.data.meta.success) {
           req.session.isInCollective = false;
+        }
+        res.json(result.data.meta);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  } else {
+    res.redirect("/");
+  }
+});
+
+router.post("/join", function(req, res) {
+  if (req.session.userId && !req.session.isInCollective) {
+    const requrl = url.format({
+      protocol: req.protocol,
+      host: req.get("host")
+    });
+
+    const apiURL = `${requrl}/api/user/${req.session.userId}/join`;
+    axios
+      .post(apiURL, {
+        key: req.body.key
+      })
+      .then(function(result) {
+        if (result.data.meta.success) {
+          req.session.isInCollective = true;
         }
         res.json(result.data.meta);
       })
