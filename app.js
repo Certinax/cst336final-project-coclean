@@ -2,11 +2,25 @@ const express = require("express");
 const hbs = require("hbs");
 const path = require("path");
 const createError = require("http-errors");
+const session = require("express-session");
 
 // Register partials for hbs
 hbs.registerPartials(__dirname + "/views/partials");
 
 const app = express();
+
+app.use(
+  session({
+    name: "SID",
+    secret: "#$_Æ@",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 2,
+      secure: false
+    }
+  })
+);
 
 // view engine setup, this is used for the .render() functions.
 app.set("views", path.join(__dirname, "views"));
