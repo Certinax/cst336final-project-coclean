@@ -75,6 +75,17 @@ class Chore {
 			callback(error);
 		});
 	}
+
+
+	// * Increment chore.
+	public static increment(choreId: number, callback: Function) {
+		const sql = `CALL increment_chore(${choreId}, @out); SELECT @out;`;
+		db.query(sql).then((resolved: any) => {
+			callback(resolved);
+		}).catch((error: any) => {
+			callback(error);
+		});
+	}
 }
 
 module.exports = Chore;

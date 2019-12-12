@@ -29,7 +29,7 @@ var Collective = /** @class */ (function () {
     };
     // * Create collective
     Collective.create = function (name, description, school, userId, callback) {
-        var sql = "CALL new_collective(" + name + ", \"" + description + "\", \"" + school + "\", \"" + userId + "\", @out); SELECT @out;";
+        var sql = "CALL new_collective(\"" + name + "\", \"" + description + "\", \"" + school + "\", " + userId + ", @out); SELECT @out;";
         db.query(sql).then(function (resolved) {
             callback(resolved);
         }).catch(function (error) {
