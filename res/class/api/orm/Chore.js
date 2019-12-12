@@ -26,8 +26,8 @@ var Chore = /** @class */ (function () {
         });
     };
     // * Create Chore
-    Chore.create = function (collectionName, title, description, startDate, frequency, callback) {
-        var sql = "CALL new_chore(\"" + collectionName + "\", \"" + title + "\", \"" + description + "\", DATE(\"" + startDate + "\"), " + frequency + ", @out); SELECT @out;";
+    Chore.create = function (collectiveId, title, description, frequency, callback) {
+        var sql = "CALL new_chore(" + collectiveId + ", \"" + title + "\", \"" + description + "\", " + frequency + ", @out); SELECT @out;";
         db.query(sql).then(function (resolved) {
             callback(resolved);
         }).catch(function (error) {
@@ -35,8 +35,8 @@ var Chore = /** @class */ (function () {
         });
     };
     // * Edit Chore
-    Chore.edit = function (collectionName, title, description, frequency, callback) {
-        var sql = "CALL edit_chore(\"" + collectionName + "\", \"" + title + "\", \"" + description + "\", " + frequency + ", @out); SELECT @out;";
+    Chore.edit = function (collectiveId, title, description, frequency, callback) {
+        var sql = "CALL edit_chore(" + collectiveId + ", \"" + title + "\", \"" + description + "\", " + frequency + ", @out); SELECT @out;";
         db.query(sql).then(function (resolved) {
             callback(resolved);
         }).catch(function (error) {
@@ -44,8 +44,8 @@ var Chore = /** @class */ (function () {
         });
     };
     // * Delete Chore
-    Chore.delete = function (collectiveName, title, password, callback) {
-        var sql = "CALL delete_chore(\"" + collectiveName + "\", \"" + title + "\", \"" + password + "\", @out); SELECT @out";
+    Chore.delete = function (collectiveId, callback) {
+        var sql = "CALL delete_chore(" + collectiveId + ", @out); SELECT @out";
         db.query(sql).then(function (resolved) {
             callback(resolved);
         }).catch(function (error) {

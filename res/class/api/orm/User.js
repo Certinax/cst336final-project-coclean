@@ -17,20 +17,20 @@ class User {
 
 	/**
 	 * Fetch
-	 * @param email
+	 * @param {number} id
 	 * @param {function} callback
 	 * @example
 	 * fetch(1, (user) => {
 	 *   console.log(user.getName())
 	 * });
 	 */
-	static fetch(email, callback) {
+	static fetch(id, callback) {
 
 		// Define SQL query.
-		const sql = 'SELECT * FROM User WHERE email = ?;';
+		const sql = 'SELECT * FROM User WHERE `ID` = ?;';
 
 		// Execute query.
-		db.prep(sql, [email])
+		db.prep(sql, [id])
 			.then((resolved) => {
 				// ? If the resolved value is an array.
 				if (Array.isArray(resolved)) {
@@ -39,7 +39,7 @@ class User {
 						callback(resolved);
 					} else {
 						console.error(
-							`MySQL: User with email (${email}) does not exist.`
+							`MySQL: User with email (${id}) does not exist.`
 						);
 						callback([]);
 					}
@@ -90,15 +90,18 @@ class User {
 	/**
 	 * Edit
 	 * @param {object} args
+	 * @param {number} args.id
 	 * @param {string} args.name
 	 * @param {string} args.surname
 	 * @param {string} args.email
+	 * @param {string} args.oldPassword
 	 * @param {string} args.newPassword
 	 * @param {function} callback
 	 */
-	static edit({name, surname, email, newPassword}, callback) {
+	static edit({id, name, surname, email, oldPassword, newPassword}, callback) {
+		oldPassword = mysql.SHA256(oldPassword);
 		newPassword = mysql.SHA256(newPassword);
-		const sql = `CALL edit_user("${name}","${surname}","${email}","${newPassword}",@out); SELECT @out;`;
+		const sql = `CALL edit_user("${id}", "${name}","${surname}","${email}","${oldPassword}","${newPassword}",@out); SELECT @out;`;
 		db.query(sql)
 			.then(res => {
 				callback(res);
@@ -110,13 +113,13 @@ class User {
 
 	/**
 	 * Delete
-	 * @param {object} credentials
-	 * @param {string} credentials.email
-	 * @param {string} credentials.password
+	 * @param {number} id
+	 * @param {string} password
 	 * @param {function} callback
 	 */
-	static delete({email, password}, callback) {
-		const sql = `CALL delete_user("${email}","${password}",@out); SELECT @out;`;
+	static delete(id, password, callback) {
+		password = mysql.SHA256(password);
+		const sql = `CALL delete_user(${id},"${password}",@out); SELECT @out;`;
 		db.query(sql)
 			.then(res => {
 				callback(res);
@@ -134,11 +137,12 @@ class User {
 	 * @param {function} callback
 	 */
 	static login({email, password}, callback) {
-		User.fetch(email, (result) => {
-			if (result.length === 0)
-				callback(false);
-			else callback(result);
-		});
+		const sql = 'SELECT * FROM `User` WHERE `email` = ?;';
+		db.prep(sql, [email]).then((resolved) => {
+			callback(resolved);
+		}).catch((error) => {
+			callback(error);
+		})
 	}
 }
 

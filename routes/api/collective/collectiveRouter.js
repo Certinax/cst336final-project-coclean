@@ -30,8 +30,8 @@ collectiveApi.get('/:id', (req, res, next) => {
 				'collective',
 				crudOperation.READ,
 				result.length > 0,
-				`Collective (${id}) was successfully fetched.`,
-				`Collective (${id}) does not exist.`,
+				`Collective (id: ${id}) was successfully fetched.`,
+				`Collective (id: ${id}) does not exist.`,
 				result
 			));
 		} else res.json(result);
@@ -41,8 +41,8 @@ collectiveApi.get('/:id', (req, res, next) => {
 
 // * Create collective.
 collectiveApi.post('/', (req, res, next) => {
-	const {name,email} = req.body;
-	collective.create(name, email, (result) => {
+	const {name, description, school, userId} = req.body;
+	collective.create(name, description, school, userId, (result) => {
 		if (result.length > 0) {
 			res.json(new responseBody(
 				'collective',
@@ -58,10 +58,10 @@ collectiveApi.post('/', (req, res, next) => {
 
 
 // * Update user.
-collectiveApi.put('/:email', (req, res, next) => {
-	const {email} = req.params;
-	const {name, password} = req.body;
-	collective.edit(name, email, password, (result) => {
+collectiveApi.put('/:id', (req, res, next) => {
+	const {id} = req.params;
+	const {name, description, school} = req.body;
+	collective.edit(id, name, description, school, (result) => {
 		if (result.length > 0) {
 			res.json(new responseBody(
 				'collective',
@@ -77,17 +77,16 @@ collectiveApi.put('/:email', (req, res, next) => {
 
 
 // * Delete user.
-collectiveApi.delete('/:email', (req, res, next) => {
-	const {email} = req.params;
-	const {password, name} = req.body;
-	collective.delete(email, password, name, (result) => {
+collectiveApi.delete('/:id', (req, res, next) => {
+	const {id} = req.params;
+	collective.delete(id, (result) => {
 		if (result.length > 0) {
 			res.json(new responseBody(
 				'collective',
 				crudOperation.DELETE,
 				result[1][0]["@out"] === 'Collective deleted!',
-				`Collective (${name}) was successfully deleted.`,
-				`Collective (${name}) could not be deleted. Reason: ${result[1][0]['@out']}`,
+				`Collective (id: ${id}) was successfully deleted.`,
+				`Collective (id: ${id}) could not be deleted. Reason: ${result[1][0]['@out']}`,
 				result
 			));
 		} else res.json(result);

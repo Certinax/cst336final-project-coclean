@@ -28,8 +28,8 @@ var Collective = /** @class */ (function () {
         });
     };
     // * Create collective
-    Collective.create = function (name, email, callback) {
-        var sql = "CALL new_collective(\"" + name + "\", \"" + email + "\", @out); SELECT @out;";
+    Collective.create = function (name, description, school, userId, callback) {
+        var sql = "CALL new_collective(" + name + ", \"" + description + "\", \"" + school + "\", \"" + userId + "\", @out); SELECT @out;";
         db.query(sql).then(function (resolved) {
             callback(resolved);
         }).catch(function (error) {
@@ -37,8 +37,8 @@ var Collective = /** @class */ (function () {
         });
     };
     // * Edit Collective
-    Collective.edit = function (name, email, password, callback) {
-        var sql = "CALL edit_collective(\"" + name + "\", \"" + email + "\", \"" + password + "\", @out); SELECT @out";
+    Collective.edit = function (id, name, description, school, callback) {
+        var sql = "CALL edit_collective(" + id + ", \"" + name + "\", \"" + description + "\", \"" + school + "\", @out); SELECT @out";
         db.query(sql).then(function (resolved) {
             callback(resolved);
         }).catch(function (error) {
@@ -46,8 +46,8 @@ var Collective = /** @class */ (function () {
         });
     };
     // * Delete Collective
-    Collective.delete = function (email, password, name, callback) {
-        var sql = "CALL delete_collective(\"" + email + "\", \"" + password + "\", \"" + name + "\", @out); SELECT @out";
+    Collective.delete = function (id, callback) {
+        var sql = "CALL delete_collective(" + id + ", @out); SELECT @out";
         db.query(sql).then(function (resolved) {
             callback(resolved);
         }).catch(function (error) {

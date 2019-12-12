@@ -6,17 +6,25 @@ const profileRouter = require("./profile");
 const collectiveRouter = require("./collective");
 const choreRouter = require("./chore");
 const signupRouter = require("./signup");
+const loginRouter = require("./auth/login");
 const url = require("url");
 
 // Landing page.
 router.get("/", function(req, res, next) {
-  res.render("index", {
-    title: "CoClean",
-    link: "ToBe Added",
-    //username: req.session.username,
-    message: "We are overqualified.",
-    home: true
-  });
+  if (req.session.userId) {
+    res.render("index", {
+      home: true,
+      title: "CoClean",
+      message: "We are overqualified.",
+
+      username: req.session.username
+    });
+  } else {
+    res.render("index", {
+      home: true,
+      title: "CoClean"
+    });
+  }
 });
 
 // * API Router.
@@ -30,4 +38,5 @@ router.use("/profile", profileRouter);
 router.use("/collective", collectiveRouter);
 router.use("/chore", choreRouter);
 router.use("/signup", signupRouter);
+router.use("/login", loginRouter);
 module.exports = router;
