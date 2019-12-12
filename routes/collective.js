@@ -2,11 +2,15 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", function(req, res) {
+
+  res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+
   if (req.session.userId && req.session.isInCollective) {
     res.render("page/collective/home", {
       collective: true,
       title: "Collective",
-      username: req.session.username
+      username: req.session.username,
+      userId: req.session.userId
     });
   } else if (req.session.userId && !req.session.isInCollective) {
     res.render("page/collective/select", {
