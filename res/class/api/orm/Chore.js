@@ -35,8 +35,8 @@ var Chore = /** @class */ (function () {
         });
     };
     // * Edit Chore
-    Chore.edit = function (collectiveId, title, description, frequency, callback) {
-        var sql = "CALL edit_chore(" + collectiveId + ", \"" + title + "\", \"" + description + "\", " + frequency + ", @out); SELECT @out;";
+    Chore.edit = function (choreId, title, description, frequency, callback) {
+        var sql = "CALL edit_chore(" + choreId + ", \"" + title + "\", \"" + description + "\", " + frequency + ", @out); SELECT @out;";
         db.query(sql).then(function (resolved) {
             callback(resolved);
         }).catch(function (error) {
@@ -46,6 +46,15 @@ var Chore = /** @class */ (function () {
     // * Delete Chore
     Chore.delete = function (collectiveId, callback) {
         var sql = "CALL delete_chore(" + collectiveId + ", @out); SELECT @out";
+        db.query(sql).then(function (resolved) {
+            callback(resolved);
+        }).catch(function (error) {
+            callback(error);
+        });
+    };
+    // * Increment chore.
+    Chore.increment = function (choreId, callback) {
+        var sql = "CALL increment_chore(" + choreId + ", @out); SELECT @out;";
         db.query(sql).then(function (resolved) {
             callback(resolved);
         }).catch(function (error) {

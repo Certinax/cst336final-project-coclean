@@ -29,7 +29,7 @@ var Collective = /** @class */ (function () {
     };
     // * Create collective
     Collective.create = function (name, description, school, userId, callback) {
-        var sql = "CALL new_collective(" + name + ", \"" + description + "\", \"" + school + "\", \"" + userId + "\", @out); SELECT @out;";
+        var sql = "CALL new_collective(\"" + name + "\", \"" + description + "\", \"" + school + "\", " + userId + ", @out); SELECT @out;";
         db.query(sql).then(function (resolved) {
             callback(resolved);
         }).catch(function (error) {
@@ -49,6 +49,15 @@ var Collective = /** @class */ (function () {
     Collective.delete = function (id, callback) {
         var sql = "CALL delete_collective(" + id + ", @out); SELECT @out";
         db.query(sql).then(function (resolved) {
+            callback(resolved);
+        }).catch(function (error) {
+            callback(error);
+        });
+    };
+    // * Get collective's chores.
+    Collective.getChores = function (collectiveId, callback) {
+        var sql = 'SELECT * FROM `Chore` WHERE `collective_ID` = ?;';
+        db.prep(sql, [collectiveId]).then(function (resolved) {
             callback(resolved);
         }).catch(function (error) {
             callback(error);
