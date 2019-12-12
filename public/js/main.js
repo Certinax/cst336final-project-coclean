@@ -43,10 +43,28 @@ function login() {
       } else {
         $("#feedbkSignin").html(result.text);
       }
-    }
+    },
+    error: function(error) {
+      console.log(error);
+    },
+    complete: function() {}
   });
 }
 
 function logout() {
-  console.log("log out");
+  $.ajax({
+    url: "/logout",
+    method: "get",
+    dataType: "json",
+    contentType: "application/json",
+    success: function(result) {
+      if (result.success) {
+        window.location.href = "/";
+      }
+    },
+    error: function(error) {
+      console.log(error);
+    },
+    complete: function() {}
+  });
 }
