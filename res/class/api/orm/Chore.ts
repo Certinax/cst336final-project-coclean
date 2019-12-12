@@ -45,8 +45,8 @@ class Chore {
 	}
 
 	// * Create Chore
-	public static create(collectionName: string, title: string, description: string, startDate: string, frequency: number, callback: Function) {
-		const sql = `CALL new_chore("${collectionName}", "${title}", "${description}", DATE("${startDate}"), ${frequency}, @out); SELECT @out;`;
+	public static create(collectiveId: number, title: string, description: string, frequency: number, callback: Function) {
+		const sql = `CALL new_chore(${collectiveId}, "${title}", "${description}", ${frequency}, @out); SELECT @out;`;
 		db.query(sql).then((resolved: any) => {
 			callback(resolved);
 		}).catch((error: any) => {
@@ -56,8 +56,8 @@ class Chore {
 
 
 	// * Edit Chore
-	public static edit(collectionName: string, title: string, description: string, frequency: number, callback: Function) {
-		const sql = `CALL edit_chore("${collectionName}", "${title}", "${description}", ${frequency}, @out); SELECT @out;`;
+	public static edit(choreId: number, title: string, description: string, frequency: number, callback: Function) {
+		const sql = `CALL edit_chore(${choreId}, "${title}", "${description}", ${frequency}, @out); SELECT @out;`;
 		db.query(sql).then((resolved: any) => {
 			callback(resolved);
 		}).catch((error: any) => {
@@ -67,8 +67,8 @@ class Chore {
 
 
 	// * Delete Chore
-	public static delete(collectiveName: string, title: string, password: string, callback: Function) {
-		const sql = `CALL delete_chore("${collectiveName}", "${title}", "${password}", @out); SELECT @out`;
+	public static delete(collectiveId: number, callback: Function) {
+		const sql = `CALL delete_chore(${collectiveId}, @out); SELECT @out`;
 		db.query(sql).then((resolved: any) => {
 			callback(resolved);
 		}).catch((error: any) => {
