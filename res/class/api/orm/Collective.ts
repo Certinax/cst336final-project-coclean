@@ -75,6 +75,17 @@ class Collective {
 			callback(error);
 		});
 	}
+
+
+	// * Get collective's chores.
+	public static getChores(collectiveId: number, callback: Function) {
+		const sql = 'SELECT * FROM `Chore` WHERE `collective_ID` = ?;';
+		db.prep(sql, [collectiveId]).then((resolved: any) => {
+			callback(resolved);
+		}).catch((error: any) => {
+			callback(error);
+		});
+	}
 }
 
 module.exports = Collective;

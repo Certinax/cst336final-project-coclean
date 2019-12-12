@@ -1,6 +1,7 @@
 const express = require("express");
 const userApi = express.Router();
 const user = require('../../../res/class/api/orm/User');
+const collective = require('../../../res/class/api/orm/Collective');
 const responseBody = require('../../../res/class/api/orm/ResponseBody');
 const crudOperation = require('../../../res/class/api/orm/CrudOperation');
 const mysql = require('../../../res/class/mysql/MySQL');
@@ -177,10 +178,31 @@ userApi.get('/:id/collective', (req, res, next) => {
 });
 
 
-// TODO: Fix
+// * Get user's collective's chores
 userApi.get('/:id/collective/chore', (req, res, next) => {
 	user.getCollective(req.params.id, (result) => {
-		res.json(result);
+		if (Array.isArray(result) && result.length > 0) {
+			const id = result[0]['ID'];
+			collective.getChores(id, (choreResult) => {
+				res.json(new responseBody(
+					'chore',
+					crudOperation.READ,
+					Array.isArray(choreResult) && choreResult.length > 0,
+					`${choreResult.length} chores were successfully fetched.`,
+					`No chores found for this user.`,
+					choreResult
+				));
+			});
+		} else {
+			res.json(new responseBody(
+				'chore',
+				crudOperation.READ,
+				false,
+				'',
+				`User does not exist.`,
+				[]
+			));
+		}
 	});
 });
 

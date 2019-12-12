@@ -94,4 +94,12 @@ collectiveApi.delete('/:id', (req, res, next) => {
 });
 
 
+collectiveApi.get('/:id/chore', (req, res, next) => {
+	const id = req.params.id;
+	collective.getChores(id, (result) => {
+		res.json(result);
+	});
+});
+
+
 module.exports = collectiveApi;

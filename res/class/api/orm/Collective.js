@@ -54,6 +54,15 @@ var Collective = /** @class */ (function () {
             callback(error);
         });
     };
+    // * Get collective's chores.
+    Collective.getChores = function (collectiveId, callback) {
+        var sql = 'SELECT * FROM `Chore` WHERE `collective_ID` = ?;';
+        db.prep(sql, [collectiveId]).then(function (resolved) {
+            callback(resolved);
+        }).catch(function (error) {
+            callback(error);
+        });
+    };
     Collective.Table = {
         name: 'Collective',
         column: {
