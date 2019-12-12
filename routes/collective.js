@@ -79,4 +79,59 @@ router.post("/create", function(req, res) {
   }
 });
 
+router.put("/edit", function(req, res) {
+  if (req.session.userId) {
+    console.log(req.body);
+    const requrl = url.format({
+      protocol: req.protocol,
+      host: req.get("host")
+      // pathname: req.originalUrl
+    });
+
+    const apiURL = `${requrl}/api/collective`;
+    const { name, description, school } = req.body;
+    axios
+      .post(apiURL, {
+        name: name,
+        description: description,
+        school: school,
+        userId: req.session.userId
+      })
+      .then(function(result) {
+        if (result.data.meta.success) {
+          req.session.isInCollective = true;
+        }
+        res.json(result.data.meta);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  } else {
+    res.redirect("/");
+  }
+});
+
+router.delete("/delete", function(req, res) {
+  if (req.session.userId && req.session.collectiveId) {
+    console.log(req.body);
+    const requrl = url.format({
+      protocol: req.protocol,
+      host: req.get("host")
+      // pathname: req.originalUrl
+    });
+
+    const apiURL = `${requrl}/api/collective/${req.session.collectiveId}`;
+    axios
+      .delete(apiURL)
+      .then(function(result) {
+        res.json(result.data.meta);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  } else {
+    res.redirect("/");
+  }
+});
+
 module.exports = router;

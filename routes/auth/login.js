@@ -23,10 +23,12 @@ router.post("/", function(req, res) {
         req.session.isInCollective =
           result.data.result.isInCollective === 1 ? true : false;
       }
+
       res.json(result.data.meta);
     })
     .catch(function(error) {
       console.log(error);
     });
 });
+
 module.exports = router;
