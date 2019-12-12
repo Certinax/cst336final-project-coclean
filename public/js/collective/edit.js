@@ -1,5 +1,5 @@
 $(document).ready(() => {
-  $("#createCollective").on("click", () => {
+  $("#updateCollective").on("click", () => {
     updateCollective();
   });
   $("#deleteCollective").on("click", () => {
@@ -8,6 +8,7 @@ $(document).ready(() => {
 });
 
 function updateCollective() {
+  console.log("update called");
   $.ajax({
     url: "/collective/edit",
     method: "put",
@@ -19,11 +20,17 @@ function updateCollective() {
       school: $("#school").val()
     }),
     success: function(result) {
-      console.log(result);
       if (result.success) {
-        window.location.href = "/collective";
+        // window.location.href = "/collective";
+        $("#collectiveFeedback")
+          .addClass("finishGreen")
+          .removeClass("overdueRed")
+          .html(result.text);
       } else {
-        $("#collectiveFeedback").html(result.text);
+        $("#collectiveFeedback")
+          .addClass("overdueRed")
+          .removeClass("finishGreen")
+          .html(result.text);
       }
     },
     error: function(error) {
