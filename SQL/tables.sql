@@ -52,7 +52,8 @@ CREATE TABLE `Overdue` (
   `user_ID` int(11) NOT NULL,
   `chore_ID` int(11) NOT NULL,
   `collective_ID` int(11) NOT NULL,
-  PRIMARY KEY (`user_ID`,`chore_ID`,`collective_ID`),
+  `time` DATETIME NOT NULL,
+  PRIMARY KEY (`user_ID`,`chore_ID`,`collective_ID`, `time`),
   FOREIGN KEY (`user_ID`) 
         REFERENCES `User`(`ID`)
         ON DELETE CASCADE,

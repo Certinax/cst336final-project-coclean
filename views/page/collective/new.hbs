@@ -7,7 +7,7 @@
         <div class="d-flex justify-content-start">
           <label for="collectiveName">Name</label>
         </div>
-        <input type="email" class="form-control" id="collectiveName" placeholder="Collective Name">
+        <input type="text" class="form-control" id="collectiveName" placeholder="Collective Name">
       </div>
     </div>
     <div class="form-row justify-content-center">
@@ -23,7 +23,7 @@
         <div class="d-flex justify-content-start">
           <label for="admin">Admin</label>
         </div>
-        <input disabled type="text" class="form-control" id="admin" placeholder="Christina Meyer">
+        <input disabled type="text" class="form-control" id="admin" placeholder="{{username}}">
       </div>
     </div>
     <div class="form-row justify-content-center">
@@ -55,10 +55,15 @@
         </datalist>
       </div>
     </div>
+    <div class="form-row">
+      <p class="darkFont text-center" id="collectiveFeedback"></p>
+    </div>
   </form>
 
   <div class="my-5 text-center">
-    <button class="btn btn-finish" data-toggle="modal"><span class="lightFont signupFont">Create</span></button>
+    <button id="createCollective" class="btn btn-finish" data-toggle="modal"><span
+        class="lightFont signupFont">Create</span></button>
   </div>
 
 </div>
+<script src="/js/collective/new.js"></script>

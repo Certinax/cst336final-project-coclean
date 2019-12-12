@@ -2,16 +2,16 @@
     <h2 class="darkFont">{{title}}</h2>
 
     <h5 class="darFont">This week's duty master</h5>
-    <h4 class="darkFont">Christina</h4>
+    <h4 class="darkFont">{{username}}</h4>
 
     <table id="chores" class="table" style="border-collapse:collapse;">
         <p class="text-left">List of chores (click on a chore to view description)</p>
         <thead class="darkBackground lightFont">
-        <tr>
-            <th class="text-left" colspan="2">Name</th>
-            <th>Frequency</th>
-            <th>Action</th>
-        </tr>
+            <tr>
+                <th class="text-left" colspan="2">Name</th>
+                <th>Frequency</th>
+                <th>Action</th>
+            </tr>
         </thead>
         <tbody id="chore-table-body" data-id="{{userId}}" data-collective-id="{{collectiveId}}" class="chore-table">
 			<tr>
@@ -69,7 +69,8 @@
                 <div class="card-body">
                     <h5 class="card-title">Edit chores</h5>
                     <p class="card-text">To add, edit or delete chores, click here</p>
-                    <button onclick="window.location.href = '/chore'" class="btn btn-md btn-finish"><span class="lightFont">Edit chores</span></button>
+                    <button onclick="window.location.href = '/chore'" class="btn btn-md btn-finish"><span
+                            class="lightFont">Edit chores</span></button>
                 </div>
             </div>
         </div>

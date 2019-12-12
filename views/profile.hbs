@@ -1,8 +1,6 @@
 <div class="container text-center mt-5 nav-space">
     <h2>{{title}}</h2>
-    <img height="150px" width="150px"
-         src="https://images.unsplash.com/photo-1531220847861-69e336daffa0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
-         alt="user defined image" class="rounded-circle my-3">
+    <img id="profilePic" height="150px" width="150px" alt="user defined image" class="rounded-circle my-3">
 
     <h5>Hi {{username}}!</h5>
 
@@ -75,7 +73,7 @@
                 class="lightFont signupFont">Delete</span></button>
     </div>
     <div class="text-center mt-2 mb-5">
-        <button class="btn btn-mellowYellow" data-toggle="modal" data-target="#updatePassModal"><span
+        <button id="updatePasswordBtn" class="btn btn-mellowYellow" data-toggle="modal" data-target="#updatePassModal"><span
                 class="lightFont signupFont">Update password</span></button>
     </div>
 
@@ -195,8 +193,11 @@
                     </div>
                 </div>
             </div>
+            <div class="text-center">
+                <p class="overdueRed" id="passupdateFeedback"></p>
+            </div>
             <div class="text-center mt-4">
-                <button type="button" class="btn btn-finish lightFont" id="updateProfile">Confirm</button>
+                <button type="button" class="btn btn-finish lightFont" id="updatePasswordbtnconfirm">Confirm</button>
                 <button type="button" class="btn btn-overdue lightFont" data-dismiss="modal">Cancel</button>
             </div>
             <!-- <div class="text-center">

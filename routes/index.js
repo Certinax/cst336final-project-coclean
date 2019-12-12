@@ -8,11 +8,11 @@ const choreRouter = require("./chore");
 const signupRouter = require("./signup");
 const loginRouter = require("./auth/login");
 const logoutRouter = require("./auth/logout");
+const searchRouter = require("./search");
 const url = require("url");
 
 // Landing page.
 router.get("/", function(req, res, next) {
-  console.log(req.session);
   if (req.session.userId) {
     res.render("index", {
       home: true,
@@ -41,4 +41,5 @@ router.use("/chore", choreRouter);
 router.use("/signup", signupRouter);
 router.use("/login", loginRouter);
 router.use("/logout", logoutRouter);
+router.use("/search", searchRouter);
 module.exports = router;
