@@ -105,8 +105,16 @@ userApi.post('/login/', (req, res, next) => {
 		if (Array.isArray(result) && result.length > 0) {
 			const trialPassword = mysql.SHA256(password);
 			const existingPassword = result[0]['password'];
-			user.isInCollective(result[0]['ID'], (isInCollectiveRes) => {
-				result[0]['isInCollective'] = isInCollectiveRes[0]['in_collective'];
+			user.getCollective(result[0]['ID'], (collectiveResult) => {
+				console.log(collectiveResult);
+				result[0]['isInCollective'] = false;
+				result[0]['collectiveId'] = null;
+				result[0]['collectiveAdminId'] = null;
+				if (Array.isArray(collectiveResult) && collectiveResult.length > 0) {
+					result[0]['isInCollective'] = true;
+					result[0]['collectiveId'] = collectiveResult[0]['ID'];
+					result[0]['collectiveAdminId'] = collectiveResult[0]['admin_user'];
+				}
 				res.json(new responseBody(
 					'user',
 					crudOperation.READ,
