@@ -1,7 +1,7 @@
 $(document).ready(() => {
     getProfilePic();
 
-    $("#updatePasswordBtn").on("click", function () {
+    $("#updatePasswordbtnconfirm").on("click", function () {
         updatePass();
     });
 
@@ -59,15 +59,42 @@ function updateUser() {
         dataType: "json",
         contentType: "application/json",
         data: JSON.stringify({
-            password: $("#updatePasswordConfirm").val()
+            name: $("#profileFirstName").val(),
+            surname: $("#profileLastName").val(),
+            email: $("#profileEmail").val(),
+            newPassword: $("#updatePasswordConfirm").val(),
+            oldPassword: $("#updatePasswordConfirm").val()
         }),
         success: function(result) {
             if (result.meta.success) {
-                $("#updateFeedback").html(result.meta);
-                console.log("success")
+                $("#updateFeedback").html(result.meta.text);
+                $("#updateModal").modal("hide");
             } else {
                 $("#updateFeedback").html(result.meta.text);
-                console.log("fail")
+            }
+        }
+    });
+}
+
+function updatePass() {
+    $.ajax({
+        url: "/profile/update",
+        method: "put",
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify({
+            name: $("#profileFirstName").val(),
+            surname: $("#profileLastName").val(),
+            email: $("#profileEmail").val(),
+            newPassword: $("#newPassword").val(),
+            oldPassword: $("#oldpassword").val()
+        }),
+        success: function(result) {
+            if (result.meta.success) {
+                $("#passupdateFeedback").html(result.meta.text);
+                $("#updatePassModal").modal("hide");
+            } else {
+                $("#passupdateFeedback").html(result.meta.text);
             }
         }
     });
