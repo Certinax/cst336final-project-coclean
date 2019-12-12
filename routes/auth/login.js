@@ -18,9 +18,8 @@ router.post("/", function(req, res) {
     })
     .then(function(result) {
       if (result.data.meta.success) {
-        console.log("Getting userid: ", result.data.result[0].ID);
-        req.session.userId = result.data.result[0].ID;
-        req.session.username = result.data.result[0].name;
+        req.session.userId = result.data.result.ID;
+        req.session.username = result.data.result.name;
       }
       res.json(result.data.meta);
     })

@@ -36,7 +36,6 @@ function login() {
       password: $("#signinPassword").val()
     }),
     success: function(result) {
-      console.log(result);
       if (result.success) {
         clearSigninModal();
         $("#modalSignIn").modal("hide");
