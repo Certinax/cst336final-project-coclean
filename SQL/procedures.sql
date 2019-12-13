@@ -25,7 +25,8 @@ CREATE PROCEDURE new_user(
     IN p_email VARCHAR(45),
     IN p_password VARCHAR(70),
     
-    OUT p_message VARCHAR(150)
+    OUT p_message VARCHAR(150),
+    OUT p_out_ID INT(2)
 )
 
 BEGIN
@@ -61,6 +62,7 @@ START TRANSACTION;
         );
              
         SELECT CONCAT('User created!') INTO p_message;
+        SELECT MAX(`ID`) FROM `User` INTO p_out_ID;
     END IF;
             
 COMMIT;
@@ -225,7 +227,8 @@ CREATE PROCEDURE new_collective(
     IN p_school VARCHAR(70),
     IN p_ID INT(11),
     
-    OUT p_message VARCHAR(150)
+    OUT p_message VARCHAR(150),
+    OUT p_out_ID INT(2)
 )
 
 BEGIN
@@ -274,6 +277,8 @@ START TRANSACTION;
             (p_ID, (SELECT MAX(`ID`) FROM `Collective`));
              
         SELECT CONCAT('Collective created!') INTO p_message;
+        SELECT MAX(`ID`) FROM `Collective` INTO p_out_ID;
+
     END IF;
             
 COMMIT;
@@ -408,7 +413,8 @@ CREATE PROCEDURE new_chore(
     IN p_desc TINYTEXT,
     IN p_frequency INT(11),
     
-    OUT p_message VARCHAR(150)
+    OUT p_message VARCHAR(150),
+    OUT p_out_ID INT(2)
 )
 
 BEGIN
@@ -441,6 +447,7 @@ START TRANSACTION;
             );
              
             SELECT CONCAT('Chore created!') INTO p_message;
+            SELECT MAX(`ID`) FROM `Chore` INTO p_out_ID;
     END IF;
             
 COMMIT;

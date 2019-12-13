@@ -27,9 +27,10 @@ CALL new_user(
             @sname,
             @email, 
             @upassword,
-            @svar1);
+            @svar1,
+            @svar2);
             
-Select @svar1;
+Select @svar1, @svar2;
 
 
 -- ************************************************* -- 
@@ -106,9 +107,10 @@ CALL new_collective(
             @p_desc,
             @p_school,
             @p_ID,
-            @svar1);
+            @svar1,
+            @svar2);
             
-Select @svar1;
+Select @svar1, @svar2;
 
 
 -- ************************************************* -- 
@@ -181,9 +183,10 @@ CALL new_chore(
             @title,
             @desc,
             @freq,
-            @svar1);
+            @svar1,
+            @svar2);
             
-Select @svar1;
+Select @svar1, @svar2;
 
 -- SELECT * FROM `User`;
 -- SELECT * FROM `Collective`;
