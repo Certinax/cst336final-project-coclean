@@ -66,7 +66,6 @@ class User {
     const sql = `CALL new_user("${name}","${surname}","${email}","${password}",@out,@out2); SELECT @out,@out2;`;
     db.query(sql)
       .then((res: any) => {
-        console.log("User.ts: ", res);
         callback(res);
       })
       .catch((err: any) => {
@@ -136,7 +135,7 @@ class User {
 
   // * User join collective
   public static joinCollective(id: string, key: string, callback: Function) {
-    const sql = `CALL add_user_coll(${id}, "${key}", @out); SELECT @out;`;
+    const sql = `CALL add_user_coll(${id}, "${key}", @out, @out2); SELECT @out, @out2;`;
     db.query(sql)
       .then((resolved: any) => {
         callback(resolved);

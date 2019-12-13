@@ -152,7 +152,7 @@ userApi.post("/:id/join", (req, res, next) => {
           result[1][0]["@out"] === "User added to collective!",
         `User (id: ${id}) successfully added to collective.`,
         `User (id: ${id}) could not be added to the collective.`,
-        result
+        { status: result[1][0]["@out"], collectiveId: result[1][0]["@out2"] }
       )
     );
   });

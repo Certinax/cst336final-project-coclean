@@ -56,7 +56,6 @@ var User = /** @class */ (function () {
         var sql = "CALL new_user(\"" + name + "\",\"" + surname + "\",\"" + email + "\",\"" + password + "\",@out,@out2); SELECT @out,@out2;";
         db.query(sql)
             .then(function (res) {
-            console.log("User.ts: ", res);
             callback(res);
         })
             .catch(function (err) {
@@ -112,7 +111,7 @@ var User = /** @class */ (function () {
     };
     // * User join collective
     User.joinCollective = function (id, key, callback) {
-        var sql = "CALL add_user_coll(" + id + ", \"" + key + "\", @out); SELECT @out;";
+        var sql = "CALL add_user_coll(" + id + ", \"" + key + "\", @out, @out2); SELECT @out, @out2;";
         db.query(sql)
             .then(function (resolved) {
             callback(resolved);
