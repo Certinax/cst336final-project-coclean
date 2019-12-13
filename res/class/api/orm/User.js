@@ -1,9 +1,9 @@
 "use strict";
-require('dotenv').config();
+require("dotenv").config();
 // @ts-ignore
-var mysql = require('../../mysql/MySQL');
+var mysql = require("../../mysql/MySQL");
 // @ts-ignore
-var mysqlCredentials = require('../../mysql/MysqlCredentials');
+var mysqlCredentials = require("../../mysql/MysqlCredentials");
 // @ts-ignore
 var db = mysql.getInstance(new mysqlCredentials(process.env.DB_HOST, process.env.DB_USER, process.env.DB_PASS, process.env.DB_NAME));
 /**
@@ -16,7 +16,7 @@ var User = /** @class */ (function () {
     // * Get specific user
     User.fetch = function (id, callback) {
         // Define SQL query.
-        var sql = 'SELECT * FROM User WHERE `ID` = ?;';
+        var sql = "SELECT * FROM User WHERE `ID` = ?;";
         // Execute query.
         db.prep(sql, [id])
             .then(function (resolved) {
@@ -33,29 +33,33 @@ var User = /** @class */ (function () {
             }
             else
                 callback([]);
-        }).catch(function (err) {
+        })
+            .catch(function (err) {
             callback([]);
         });
     };
     // * Get all users
     User.fetchAll = function (callback) {
-        var sql = 'SELECT * FROM User;';
+        var sql = "SELECT * FROM User;";
         db.query(sql)
             .then(function (resolved) {
-            if (typeof resolved === 'object')
+            if (typeof resolved === "object")
                 callback(resolved);
-        }).catch(function (err) {
+        })
+            .catch(function (err) {
             callback([]);
         });
     };
     // *  Create user
     User.create = function (name, surname, email, password, callback) {
         password = mysql.SHA256(password);
-        var sql = "CALL new_user(\"" + name + "\",\"" + surname + "\",\"" + email + "\",\"" + password + "\",@out); SELECT @out;";
+        var sql = "CALL new_user(\"" + name + "\",\"" + surname + "\",\"" + email + "\",\"" + password + "\",@out,@out2); SELECT @out,@out2;";
         db.query(sql)
             .then(function (res) {
+            console.log("User.ts: ", res);
             callback(res);
-        }).catch(function (err) {
+        })
+            .catch(function (err) {
             callback([]);
         });
     };
@@ -67,7 +71,8 @@ var User = /** @class */ (function () {
         db.query(sql)
             .then(function (res) {
             callback(res);
-        }).catch(function (err) {
+        })
+            .catch(function (err) {
             callback([]);
         });
     };
@@ -78,62 +83,72 @@ var User = /** @class */ (function () {
         db.query(sql)
             .then(function (res) {
             callback(res);
-        }).catch(function (err) {
+        })
+            .catch(function (err) {
             callback([]);
         });
     };
     // * User login
     User.login = function (email, password, callback) {
-        var sql = 'SELECT * FROM `User` WHERE `email` = ?;';
-        var sql2 = 'SELECT COUNT(*) FROM `user_in_collective` WHERE `user_ID` = ?';
-        db.prep(sql, [email]).then(function (resolved) {
+        var sql = "SELECT * FROM `User` WHERE `email` = ?;";
+        db.prep(sql, [email])
+            .then(function (resolved) {
             callback(resolved);
-        }).catch(function (error) {
+        })
+            .catch(function (error) {
             callback(error);
         });
     };
     // * User is in collective.
     User.isInCollective = function (id, callback) {
-        var sql = 'SELECT COUNT(*) AS `in_collective` FROM `user_in_collective` WHERE `user_ID` = ?;';
-        db.prep(sql, [id]).then(function (resolved) {
+        var sql = "SELECT COUNT(*) AS `in_collective` FROM `user_in_collective` WHERE `user_ID` = ?;";
+        db.prep(sql, [id])
+            .then(function (resolved) {
             callback(resolved);
-        }).catch(function (error) {
+        })
+            .catch(function (error) {
             callback(error);
         });
     };
     // * User join collective
     User.joinCollective = function (id, key, callback) {
         var sql = "CALL add_user_coll(" + id + ", \"" + key + "\", @out); SELECT @out;";
-        db.query(sql).then(function (resolved) {
+        db.query(sql)
+            .then(function (resolved) {
             callback(resolved);
-        }).catch(function (err) {
+        })
+            .catch(function (err) {
             callback(err);
         });
     };
     // * User leave collective
     User.leaveCollective = function (id, collectiveId, callback) {
         var sql = "CALL delete_user_coll(" + id + ", " + collectiveId + ", @out); SELECT @out;";
-        db.query(sql).then(function (resolved) {
+        db.query(sql)
+            .then(function (resolved) {
             callback(resolved);
-        }).catch(function (err) {
+        })
+            .catch(function (err) {
             callback(err);
         });
     };
     // * Get users collective.
     User.getCollective = function (id, callback) {
-        var sql = 'SELECT' +
-            ' C.*' +
-            ' FROM' +
-            ' `Collective` AS C,' +
-            ' `user_in_collective` AS UIC,' +
-            ' `User` AS U' +
-            ' WHERE' +
-            ' C.`ID` = UIC.`collective_ID`' +
-            ' AND UIC.`user_ID` = U.`ID`' +
-            ' AND U.`ID` = ?;';
-        db.prep(sql, [id]).then(function (resolved) {
+        var sql = "SELECT" +
+            " C.*" +
+            " FROM" +
+            " `Collective` AS C," +
+            " `user_in_collective` AS UIC," +
+            " `User` AS U" +
+            " WHERE" +
+            " C.`ID` = UIC.`collective_ID`" +
+            " AND UIC.`user_ID` = U.`ID`" +
+            " AND U.`ID` = ?;";
+        db.prep(sql, [id])
+            .then(function (resolved) {
             callback(resolved);
-        }).catch(function (error) {
+        })
+            .catch(function (error) {
             callback(error);
         });
     };

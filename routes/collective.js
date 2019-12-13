@@ -4,22 +4,12 @@ const axios = require("axios");
 const url = require("url");
 
 router.get("/", function(req, res) {
-
   if (req.session.userId && req.session.isInCollective) {
-    const url = `${req.headers.referer}api/user/${req.session.userId}/collective`;
-    axios.get(url).then((resolved) => {
-      res.render("page/collective/home", {
-        collective: true,
-        title: "Collective",
-        username: req.session.username,
-        userId: req.session.userId,
-        collectiveId: resolved.data['result'][0]['ID'],
-        invitationKey: resolved.data['result'][0]['key']
-      });
-    }).catch((error) => {
-      console.log(error);
-      res.status(500);
-      res.send('<h1>[500] Something went wrong</h1>');
+    res.render("page/collective/home", {
+      collective: true,
+      title: "Collective",
+      username: req.session.username,
+      userId: req.session.userId
     });
   } else if (req.session.userId && !req.session.isInCollective) {
     res.render("page/collective/select", {
@@ -57,11 +47,7 @@ router.get("/edit", function(req, res) {
       host: req.get("host")
     });
 
-    console.log(req.session.collectiveId);
-
     const apiURL = `${requrl}/api/collective/${req.session.collectiveId}`;
-
-    console.log(apiURL);
     axios
       .get(apiURL)
       .then(function(result) {
@@ -102,7 +88,8 @@ router.post("/create", function(req, res) {
         userId: req.session.userId
       })
       .then(function(result) {
-        if (result.data.meta.success) {
+        console.log(result.data);
+        if (result.data.meta.success && result.data.result[0]) {
           req.session.isInCollective = true;
           req.session.collectiveId = result.data.result[0].collectiveId;
         }
@@ -195,17 +182,21 @@ router.post("/join", function(req, res) {
   }
 });
 
-router.post('/leave', (req, res, next) => {
-  let {userId, collectiveId} = req.body;
-  userId = 15; collectiveId = 20;
+router.post("/leave", (req, res, next) => {
+  let { userId, collectiveId } = req.body;
+  userId = 15;
+  collectiveId = 20;
   const URL = req.headers.referer + `api/user/${userId}/leave`;
-  axios.post(URL, {collectiveId}).then((resolved) => {
-    console.log(resolved);
-    res.json(resolved);
-  }).catch((error) => {
-    console.log(error);
-    res.json(error);
-  });
+  axios
+    .post(URL, { collectiveId })
+    .then(resolved => {
+      console.log(resolved);
+      res.json(resolved);
+    })
+    .catch(error => {
+      console.log(error);
+      res.json(error);
+    });
 });
 
 module.exports = router;

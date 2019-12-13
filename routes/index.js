@@ -9,6 +9,7 @@ const signupRouter = require("./signup");
 const loginRouter = require("./auth/login");
 const logoutRouter = require("./auth/logout");
 const searchRouter = require("./search");
+const statisticsRouter = require("./statistics");
 const url = require("url");
 
 // Landing page.
@@ -42,4 +43,5 @@ router.use("/signup", signupRouter);
 router.use("/login", loginRouter);
 router.use("/logout", logoutRouter);
 router.use("/search", searchRouter);
+router.use("/statistics", statisticsRouter);
 module.exports = router;
