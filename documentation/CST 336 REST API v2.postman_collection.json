@@ -1,0 +1,669 @@
+{
+	"info": {
+		"_postman_id": "a97c7544-828c-4d70-8aa2-aab9c4a1158c",
+		"name": "CST 336 REST API v2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Collective",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Collection Name\",\n\t\"description\": \"Description\",\n\t\"school\": \"CSUMB\",\n\t\"userId\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://coclean.herokuapp.com/api/collective",
+					"protocol": "http",
+					"host": [
+						"coclean",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"collective"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Collectives",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://coclean.herokuapp.com/api/collective",
+					"protocol": "http",
+					"host": [
+						"coclean",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"collective"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Specific Collective",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://coclean.herokuapp.com/api/collective/2",
+					"protocol": "http",
+					"host": [
+						"coclean",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"collective",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Collective",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"New Collective Name\",\n\t\"description\": \"New description\",\n\t\"school\": \"USN\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://coclean.herokuapp.com/api/collective/4",
+					"protocol": "http",
+					"host": [
+						"coclean",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"collective",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Collective",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://coclean.herokuapp.com/api/collective/4",
+					"protocol": "http",
+					"host": [
+						"coclean",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"collective",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Chore",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"collectiveId\": 1,\n\t\"title\": \"Vacuum common area\",\n\t\"description\": \"Get vacuum machie from Prom. post office.\",\n\t\"frequency\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://coclean.herokuapp.com/api/chore",
+					"protocol": "http",
+					"host": [
+						"coclean",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"chore"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Chores",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://coclean.herokuapp.com/api/chore",
+					"protocol": "http",
+					"host": [
+						"coclean",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"chore"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Specific Chore",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://coclean.herokuapp.com/api/chore/1",
+					"protocol": "http",
+					"host": [
+						"coclean",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"chore",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Increment Chore",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://coclean.herokuapp.com/api/chore/3/increment",
+					"protocol": "http",
+					"host": [
+						"coclean",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"chore",
+						"3",
+						"increment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Chore",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"Clean kitchen\",\n\t\"description\": \"Use detrgent\",\n\t\"frequency\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://coclean.herokuapp.com/api/chore/1",
+					"protocol": "http",
+					"host": [
+						"coclean",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"chore",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Chore",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://coclean.herokuapp.com/api/chore/6",
+					"protocol": "http",
+					"host": [
+						"coclean",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"chore",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Isak\",\n\t\"surname\": \"Hauge\",\n\t\"email\": \"ihauge@csumb.edu\",\n\t\"password\": \"abc\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://coclean.herokuapp.com/api/user",
+					"protocol": "http",
+					"host": [
+						"coclean",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Join Collective",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"key\": \"ced14887d230098767c95c928cd054caa7000c53\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://coclean.herokuapp.com/api/user/4/join",
+					"protocol": "http",
+					"host": [
+						"coclean",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"user",
+						"4",
+						"join"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Leave Collective",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"collectiveId\": 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://coclean.herokuapp.com/api/user/14/leave",
+					"protocol": "http",
+					"host": [
+						"coclean",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"user",
+						"14",
+						"leave"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://coclean.herokuapp.com/api/user",
+					"protocol": "http",
+					"host": [
+						"coclean",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Specific User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://coclean.herokuapp.com/api/user/1",
+					"protocol": "http",
+					"host": [
+						"coclean",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"user",
+						"1"
+					]
+				},
+				"description": "Email is identifier"
+			},
+			"response": []
+		},
+		{
+			"name": "Get User's Collectives",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://coclean.herokuapp.com/api/user/4/collective",
+					"protocol": "http",
+					"host": [
+						"coclean",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"user",
+						"4",
+						"collective"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User's Collective's Chores",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://coclean.herokuapp.com/api/user/1/collective/chore",
+					"protocol": "http",
+					"host": [
+						"coclean",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"user",
+						"1",
+						"collective",
+						"chore"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User edit",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Isak Kristiansen\",\n\t\"surname\": \"Hauge\",\n\t\"email\": \"ihauge@csumb.edur\",\n\t\"oldPassword\": \"abc\",\n\t\"newPassword\": \"abc123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://coclean.herokuapp.com/api/user/53",
+					"protocol": "http",
+					"host": [
+						"coclean",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"user",
+						"53"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"password\": \"abc123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://coclean.herokuapp.com/api/user/53",
+					"protocol": "http",
+					"host": [
+						"coclean",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"user",
+						"53"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"ihauge@csumb.edu\",\n\t\"password\":\"abc\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://coclean.herokuapp.com/api/user/login/",
+					"protocol": "http",
+					"host": [
+						"coclean",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"user",
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all overdues",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://coclean.herokuapp.com/api/overdue",
+					"protocol": "http",
+					"host": [
+						"coclean",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"overdue"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
