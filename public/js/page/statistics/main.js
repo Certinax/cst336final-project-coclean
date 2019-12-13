@@ -61,7 +61,6 @@ function getInfo() {
       id: $("#collectiveList").val()
     }),
     success: function(result) {
-      console.log(result);
       if (endpoint === "members") {
         showMembers(result);
       } else if (endpoint === "overdues") {
