@@ -198,7 +198,6 @@ router.post("/join", function(req, res) {
         key: req.body.key
       })
       .then(function(result) {
-        console.log("Collective.js /JOIN: ", result.data.result);
         if (result.data.meta.success) {
           req.session.isInCollective = true;
           req.session.collectiveId = result.data.result.collectiveId;
