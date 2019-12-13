@@ -117,7 +117,7 @@ function showCompleted(completed) {
     const completionRate = Number.parseInt(completion).toFixed(1);
     $("#reportData")
       .append(
-        `<p class="card-text">The completionrate for chores in this collective is at ${completionRate}%.</p>`
+        `<p class="card-text">The completion rate for chores in this collective is at ${completionRate}%.</p>`
       )
       .append("<hr/>");
   }
