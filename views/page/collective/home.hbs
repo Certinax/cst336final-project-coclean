@@ -2,57 +2,57 @@
     <h2 class="darkFont">{{title}}</h2>
 
     <h5 class="darFont">This week's duty master</h5>
-    <h4 class="darkFont">Christina</h4>
+    <h4 class="darkFont">{{username}}</h4>
 
     <table id="chores" class="table" style="border-collapse:collapse;">
         <p class="text-left">List of chores (click on a chore to view description)</p>
         <thead class="darkBackground lightFont">
-        <tr>
-            <th class="text-left" colspan="2">Name</th>
-            <th>Frequency</th>
-            <th>Action</th>
-        </tr>
+            <tr>
+                <th class="text-left" colspan="2">Name</th>
+                <th>Frequency</th>
+                <th>Action</th>
+            </tr>
         </thead>
-        <tbody class="chore-table">
-        <tr>
-            <td class="text-left align-middle" colspan="2" data-toggle="collapse" data-target=".item1">Daily garbage
-            </td>
-            <td class="align-middle" data-toggle="collapse" data-target=".item1">1/7</td>
-            <td>
-                <button class="btn btn-finish btn-sm m-0"><span class="lightFont">Done</span></button>
-            </td>
-        </tr>
-        <tr>
-            <td class="hiddenRow" colspan="4">
-                <div class="collapse item1 text-left">Description</div>
-            </td>
-        </tr>
-        <tr>
-            <td class="text-left align-middle" colspan="2" data-toggle="collapse" data-target=".item2">Kitchen vacuum
-            </td>
-            <td class="align-middle" data-toggle="collapse" data-target=".item2">1</td>
-            <td>
-                <button class="btn btn-finish btn-sm m-0"><span class="lightFont">Done</span></button>
-            </td>
-        </tr>
-        <tr>
-            <td class="hiddenRow" colspan="4">
-                <div class="collapse item2 text-left">Description</div>
-            </td>
-        </tr>
-        <tr>
-            <td class="text-left align-middle" colspan="2" data-toggle="collapse" data-target=".item3">Bathroom cleaning
-            </td>
-            <td class="align-middle" data-toggle="collapse" data-target=".item3">1</td>
-            <td>
-                <button class="btn btn-finish btn-sm m-0"><span class="lightFont">Done</span></button>
-            </td>
-        </tr>
-        <tr>
-            <td class="hiddenRow" colspan="4">
-                <div class="collapse item3 text-left">Description</div>
-            </td>
-        </tr>
+        <tbody id="chore-table-body" data-id="{{userId}}" data-collective-id="{{collectiveId}}" class="chore-table">
+			<tr>
+				<td class="text-left align-middle" colspan="2" data-toggle="collapse" data-target=".item1">Daily garbage
+				</td>
+				<td class="align-middle" data-toggle="collapse" data-target=".item1">1/7</td>
+				<td>
+					<button class="btn btn-finish btn-sm m-0"><span class="lightFont">Done</span></button>
+				</td>
+			</tr>
+			<tr>
+				<td class="hiddenRow" colspan="4">
+					<div class="collapse item1 text-left">Description</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="text-left align-middle" colspan="2" data-toggle="collapse" data-target=".item2">Kitchen vacuum
+				</td>
+				<td class="align-middle" data-toggle="collapse" data-target=".item2">1</td>
+				<td>
+					<button class="btn btn-finish btn-sm m-0"><span class="lightFont">Done</span></button>
+				</td>
+			</tr>
+			<tr>
+				<td class="hiddenRow" colspan="4">
+					<div class="collapse item2 text-left">Description</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="text-left align-middle" colspan="2" data-toggle="collapse" data-target=".item3">Bathroom cleaning
+				</td>
+				<td class="align-middle" data-toggle="collapse" data-target=".item3">1</td>
+				<td>
+					<button class="btn btn-finish btn-sm m-0"><span class="lightFont">Done</span></button>
+				</td>
+			</tr>
+			<tr>
+				<td class="hiddenRow" colspan="4">
+					<div class="collapse item3 text-left">Description</div>
+				</td>
+			</tr>
         </tbody>
     </table>
 
@@ -62,14 +62,15 @@
                 <div class="card-body">
                     <h5 class="card-title">Invite your cohabitants</h5>
                     <p class="card-text">To add more member to this collective, send them an invite link</p>
-                    <button class="btn btn-md btn-finish"><span class="lightFont">Invite</span></button>
+                    <button class="btn btn-md btn-finish" data-toggle="modal" data-target="#invitationModal"><span class="lightFont">Invite</span></button>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="card-body">
                     <h5 class="card-title">Edit chores</h5>
                     <p class="card-text">To add, edit or delete chores, click here</p>
-                    <button onclick="window.location.href = '/chore'" class="btn btn-md btn-finish"><span class="lightFont">Edit chores</span></button>
+                    <button onclick="window.location.href = '/chore'" class="btn btn-md btn-finish"><span
+                            class="lightFont">Edit chores</span></button>
                 </div>
             </div>
         </div>
@@ -79,9 +80,32 @@
             <div class="card-body">
                 <h5 class="card-title">Leave collective</h5>
                 <p class="card-text">To leave the current collective</p>
-                <button onclick="" class="btn btn-md btn-overdue"><span class="lightFont">Leave collective</span>
+                <button id="btn-leave" class="btn btn-md btn-overdue"><span class="lightFont">Leave collective</span>
                 </button>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="invitationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+	 aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Copy this invitation key</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				{{invitationKey}}
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="module" src="/js/page/collective/home.js"></script>

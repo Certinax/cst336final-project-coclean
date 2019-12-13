@@ -69,7 +69,7 @@ router.delete("/delete", function(req, res) {
     });
 });
 
-//Delete User
+//Update User
 router.put("/update", function(req, res) {
   const requrl = url.format({
     protocol: req.protocol,
@@ -77,17 +77,14 @@ router.put("/update", function(req, res) {
   });
 
   const apiURL = `${requrl}/api/user/${req.session.userId}`;
-  console.log(apiURL);
 
   axios
     .put(apiURL, {
-      data: {
-        name: $("#profileFirstName"),
-        surname: $("#profileLastName"),
-        email: $("#profileEmail"),
-        newPassword: req.body.password,
-        oldPassword: req.body.password
-      }
+      name: req.body.name,
+      surname: req.body.surname,
+      email: req.body.email,
+      newPassword: req.body.newPassword,
+      oldPassword: req.body.oldPassword
     })
     .then(function(result) {
       if (result.data.meta.success) {
@@ -97,7 +94,7 @@ router.put("/update", function(req, res) {
       }
     })
     .catch(function(error) {
-      console.log(error);
+      console.log("error");
     });
 });
 
