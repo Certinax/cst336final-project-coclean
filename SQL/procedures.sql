@@ -113,7 +113,7 @@ START TRANSACTION;
     ELSEIF (@passwordCorrect < 1) THEN
             SELECT CONCAT('Incorrect password.') INTO p_message;
     
-    ELSEIF (@emailInUse > 0) THEN
+    ELSEIF (@emailInUse > 1) THEN
             SELECT CONCAT('Email already in use.') INTO p_message;
 
     ELSEIF (p_new_email = '') THEN
@@ -313,7 +313,7 @@ START TRANSACTION;
     IF @collectiveExists < 1 THEN
             SELECT CONCAT('Collective does not exist.') INTO p_message;
     
-    ELSEIF (@nameTaken > 0) THEN
+    ELSEIF (@nameTaken > 1) THEN
             SELECT CONCAT('Name already taken.') INTO p_message;            
 
     ELSEIF (p_new_name = '') THEN
