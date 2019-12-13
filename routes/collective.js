@@ -47,11 +47,7 @@ router.get("/edit", function(req, res) {
       host: req.get("host")
     });
 
-    console.log(req.session.collectiveId);
-
     const apiURL = `${requrl}/api/collective/${req.session.collectiveId}`;
-
-    console.log(apiURL);
     axios
       .get(apiURL)
       .then(function(result) {
@@ -92,7 +88,8 @@ router.post("/create", function(req, res) {
         userId: req.session.userId
       })
       .then(function(result) {
-        if (result.data.meta.success) {
+        console.log(result.data);
+        if (result.data.meta.success && result.data.result[0]) {
           req.session.isInCollective = true;
           req.session.collectiveId = result.data.result[0].collectiveId;
         }

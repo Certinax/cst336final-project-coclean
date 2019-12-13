@@ -98,7 +98,7 @@ function signUp() {
     success: function(result) {
       if (result.meta.success) {
         $("#modalRegisterForm").modal("hide");
-        $("#creationSuccessMessage").text(result.result);
+        $("#creationSuccessMessage").text(result.meta.text);
         $("#userCreationModal").modal("show");
       } else {
         $("#feedbkSignup").html(result.result);
