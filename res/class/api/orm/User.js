@@ -56,7 +56,6 @@ var User = /** @class */ (function () {
         var sql = "CALL new_user(\"" + name + "\",\"" + surname + "\",\"" + email + "\",\"" + password + "\",@out,@out2); SELECT @out,@out2;";
         db.query(sql)
             .then(function (res) {
-            console.log("User.ts: ", res);
             callback(res);
         })
             .catch(function (err) {

@@ -51,7 +51,6 @@ router.get("/edit", function(req, res) {
     axios
       .get(apiURL)
       .then(function(result) {
-        console.log(result);
         const { name, description, school } = result.data.result[0];
         res.render("page/collective/edit", {
           collective: true,
@@ -88,10 +87,9 @@ router.post("/create", function(req, res) {
         userId: req.session.userId
       })
       .then(function(result) {
-        console.log(result.data);
-        if (result.data.meta.success && result.data.result[0]) {
+        if (result.data.meta.success && result.data.result.insertId) {
           req.session.isInCollective = true;
-          req.session.collectiveId = result.data.result[0].collectiveId;
+          req.session.collectiveId = result.data.result.insertId;
         }
         res.json(result.data.meta);
       })
@@ -190,7 +188,6 @@ router.post("/leave", (req, res, next) => {
   axios
     .post(URL, { collectiveId })
     .then(resolved => {
-      console.log(resolved);
       res.json(resolved);
     })
     .catch(error => {
