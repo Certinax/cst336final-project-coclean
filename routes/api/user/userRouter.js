@@ -44,6 +44,7 @@ userApi.get("/:id", (req, res, next) => {
 userApi.post("/", (req, res, next) => {
   const { name, surname, email, password } = req.body;
   user.create(name, surname, email, password, result => {
+    console.log(result);
     if (!result) res.json([]);
     else {
       res.json(
@@ -53,7 +54,7 @@ userApi.post("/", (req, res, next) => {
           result[1][0]["@out"] === "User created!",
           `User (${email}) was successfully created`,
           `Email (${email}) has already been taken.`,
-          result[1][0]["@out"]
+          result[1][0]
         )
       );
     }

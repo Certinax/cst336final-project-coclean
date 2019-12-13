@@ -13,7 +13,12 @@ router.get("/", function(req, res) {
   });
 
   const sql =
-    "SELECT U.`name`, U.`surname`, U.`email` , C.`name` FROM `User` AS U, `user_in_collective` AS UIC, `Collective` AS C WHERE U.`ID` = UIC.`user_ID` AND C.`ID` = UIC.`collective_ID`;";
+    "SELECT U.`name`, U.`surname`, U.`email` , C.`name` " +
+    "FROM `User` AS U " +
+    "JOIN `user_in_collective` AS UIC " +
+    "ON UIC.`user_ID` = U.`ID` " +
+    "JOIN `Collective` AS C " +
+    "ON C.`ID` = UIC.`collective_ID`;";
 
   connection.query(sql, function(err, result, fields) {
     if (result) {

@@ -1,0 +1,31 @@
+<div class="container mt-5 nav-space">
+  <h1 class="darkFont text-center">{{title}}</h1>
+  <div id="result" style="width: 100%;"></div>
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5 class="card-title">Card title</h5>
+      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+        content.</p>
+      <div class="text-center">
+        <div class="">
+          <h6 class="darkFont">Choose stat type</h6>
+          <select class="selectpicker" name="" id="stats">
+            <option value="member">Number of member</option>
+            <option value="overdues">Number of overdues</option>
+            <option value="completed">Percentage of chores completed</option>
+          </select>
+        </div>
+        <div class="my-2">
+          <h6 class="darkFont">Choose collective</h6>
+          <select class="selectpicker" name="" id="collective">
+            <option value="">Select collective</option>
+          </select>
+        </div>
+
+        <a href="#" id="getStats" class="btn btn-primary text-center">GET STATS</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/page/statistics/main.js"></script>
