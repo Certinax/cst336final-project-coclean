@@ -61,6 +61,7 @@ function getInfo() {
       id: $("#collectiveList").val()
     }),
     success: function(result) {
+      console.log(result);
       if (endpoint === "members") {
         showMembers(result);
       } else if (endpoint === "overdues") {
@@ -114,7 +115,7 @@ function showCompleted(completed) {
       .append(`<p class="card-text">This collective have no chores.</p>`)
       .append("<hr/>");
   } else {
-    const completionRate = Number.parseInt(completion).toFixed(1);
+    const completionRate = (Number.parseFloat(completion) * 100).toFixed(2);
     $("#reportData")
       .append(
         `<p class="card-text">The completion rate for chores in this collective is at ${completionRate}%.</p>`
