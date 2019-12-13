@@ -7,7 +7,8 @@ const mysql = require("mysql2");
 router.get("/", function(req, res) {
   res.render("page/statistics", {
     statistics: true,
-    title: "Statistics"
+    title: "Statistics",
+    username: req.session.username
   });
 });
 
