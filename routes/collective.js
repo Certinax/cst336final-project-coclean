@@ -4,13 +4,44 @@ const axios = require("axios");
 const url = require("url");
 
 router.get("/", function(req, res) {
-  if (req.session.userId && req.session.isInCollective) {
-    res.render("page/collective/home", {
-      collective: true,
-      title: "Collective",
-      username: req.session.username,
-      userId: req.session.userId
+  if (
+    req.session.userId &&
+    req.session.isInCollective &&
+    req.session.collectiveId
+  ) {
+    const requrl = url.format({
+      protocol: req.protocol,
+      host: req.get("host")
     });
+
+    const apiURL = `${requrl}/api/collective/${req.session.collectiveId}`;
+    axios
+      .get(apiURL)
+      .then(function(result) {
+        const {
+          name,
+          description,
+          school,
+          admin_user,
+          onduty_user,
+          key
+        } = result.data.result[0];
+        res.render("page/collective/home", {
+          collective: true,
+          title: `Collective - ${name}`,
+          username: req.session.username,
+          collectiveName: name,
+          description: description,
+          school: school,
+          admin: admin_user,
+          onDuty: onduty_user,
+          key: key,
+          editible: admin_user === req.session.userId
+        });
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   } else if (req.session.userId && !req.session.isInCollective) {
     res.render("page/collective/select", {
       collective: true,
@@ -167,8 +198,10 @@ router.post("/join", function(req, res) {
         key: req.body.key
       })
       .then(function(result) {
+        console.log("Collective.js /JOIN: ", result.data.result);
         if (result.data.meta.success) {
           req.session.isInCollective = true;
+          req.session.collectiveId = result.data.result.collectiveId;
         }
         res.json(result.data.meta);
       })
